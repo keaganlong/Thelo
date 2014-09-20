@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self performSelector:@selector(_login) withObject:nil afterDelay:1.0];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,10 +32,14 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"login"]) {
+        
+    }
 }
 
 #pragma mark - Private methods
+- (void)_login {
+    [self performSegueWithIdentifier:@"login" sender:nil];
+}
 
 @end
