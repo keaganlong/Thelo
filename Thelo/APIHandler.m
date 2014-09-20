@@ -9,6 +9,9 @@
 #import "APIHandler.h"
 #import <AFNetworking/AFNetworking.h>
 
+#define BASE_API_URL @"http://localhost:3000"
+#define CHANNEL_URL @"/channel"
+
 @interface APIHandler ()
 @property (strong, nonatomic) APIHandler *instance;
 @end
@@ -19,9 +22,41 @@
     success();
 }
 
+- (void)getChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, CHANNEL_URL]];
+    NSURLRequest *request = [self _createGETRequestWithURL:url];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"GET response %@ %@", responseObject, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (success) {
+                NSDictionary *responseDict = (NSDictionary *)responseObject;
+                NSMutableArray *channels = [[NSMutableArray alloc] init];
+                for (NSDictionary *channel in responseDict[@"channels"]) {
+                    [channels addObject:channel[@"name"]];
+                }
+                success(channels);
+            }
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"GET failed %@ %@", error.localizedDescription, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (failure) {
+                failure(error);
+            }
+        }];
+    }];
+    [operation start];
+}
+
 #pragma mark - Static
 + (void)loginWithSuccessHandler:(void (^)())success failureHandler:(void(^)(NSError *))failure {
     [[self instance] loginWithSuccessHandler:success failureHandler:failure];
+}
+   
++ (void)getChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
+   [[self instance] getChannelsWithSuccessHandler:success failureHandler:failure];
 }
 
 #pragma mark - Private methods
@@ -35,6 +70,20 @@
     [request setValue:dataLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     return request;
+}
+
+- (NSURLRequest *)_createGETRequestWithURL:(NSURL *)url {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    return request;
+}
+
+- (void)_onMainQueue:(void (^)())handler {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (handler) {
+            handler();
+        }
+    });
 }
 
 #pragma mark - Singleton

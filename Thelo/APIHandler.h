@@ -11,5 +11,6 @@
 @interface APIHandler : NSObject
 
 + (void)loginWithSuccessHandler:(void (^)())success failureHandler:(void(^)(NSError *))failure;
++ (void)getChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure;
 
 @end

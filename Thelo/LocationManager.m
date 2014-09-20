@@ -27,6 +27,10 @@
     }
 }
 
++ (CLLocation *)currentLocation {
+    return [[LocationManager manager] location];
+}
+
 + (void)requestPermissions {
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
         [[LocationManager manager] requestAlwaysAuthorization];
@@ -40,7 +44,7 @@
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
     CLCircularRegion *circRegion = (CLCircularRegion *)region;
-    [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"Entered region: (%f,%f)", circRegion.center.latitude, circRegion.center.longitude]];
+    [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"You're within %1.0fm of %@!", circRegion.radius, circRegion.identifier]];
 }
 
 #pragma mark - Singleton

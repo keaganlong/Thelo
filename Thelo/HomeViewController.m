@@ -11,6 +11,7 @@
 
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *channelTable;
+@property (strong, nonatomic) NSArray *channels;
 @end
 
 
@@ -22,7 +23,11 @@
     self.channelTable.dataSource = self;
     self.channelTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"Device ID: %@", DEVICE_ID]];
-    [LocationManager registerRegionAtLatitude:33.777229 longitude:-84.396247 withRadius:300.0 andIdentifier:@"test notification"];
+    [LocationManager registerRegionAtLatitude:33.777229 longitude:-84.396247 withRadius:300.0 andIdentifier:@"Klaus"];
+    [APIHandler getChannelsWithSuccessHandler:^(NSArray *newChannels) {
+        self.channels = newChannels;
+        [self.channelTable reloadData];
+    } failureHandler:nil];
 }
 
 #pragma mark - UITableViewDelegate
@@ -36,12 +41,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return [self.channels count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"general"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+    cell.textLabel.text = [self.channels objectAtIndex:indexPath.row];
     return cell;
 }
 
