@@ -25,6 +25,9 @@
 		A0C602B719CD222900387D3E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029619CD222900387D3E /* UIKit.framework */; };
 		A0C602BF19CD222900387D3E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0C602BD19CD222900387D3E /* InfoPlist.strings */; };
 		A0C602C119CD222900387D3E /* TheloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602C019CD222900387D3E /* TheloTests.m */; };
+		A0C602CF19CD33BB00387D3E /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602CE19CD33BB00387D3E /* HomeViewController.m */; };
+		A0C602D219CD33F600387D3E /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602D119CD33F600387D3E /* ChannelViewController.m */; };
+		A0C602D519CD340C00387D3E /* ChannelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602D419CD340C00387D3E /* ChannelDetailViewController.m */; };
 		F78BE570E5434E1FAE06713E /* libPods-Thelo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 856CEF5C5BFE4F1D936BDB1A /* libPods-Thelo.a */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +70,12 @@
 		A0C602BC19CD222900387D3E /* TheloTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TheloTests-Info.plist"; sourceTree = "<group>"; };
 		A0C602BE19CD222900387D3E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A0C602C019CD222900387D3E /* TheloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TheloTests.m; sourceTree = "<group>"; };
+		A0C602CD19CD33BB00387D3E /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		A0C602CE19CD33BB00387D3E /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		A0C602D019CD33F600387D3E /* ChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewController.h; sourceTree = "<group>"; };
+		A0C602D119CD33F600387D3E /* ChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewController.m; sourceTree = "<group>"; };
+		A0C602D319CD340C00387D3E /* ChannelDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelDetailViewController.h; sourceTree = "<group>"; };
+		A0C602D419CD340C00387D3E /* ChannelDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +108,12 @@
 			children = (
 				3DFD0B0A19CD2CB4005CB071 /* LoginViewController.h */,
 				3DFD0B0B19CD2CB4005CB071 /* LoginViewController.m */,
+				A0C602CD19CD33BB00387D3E /* HomeViewController.h */,
+				A0C602CE19CD33BB00387D3E /* HomeViewController.m */,
+				A0C602D019CD33F600387D3E /* ChannelViewController.h */,
+				A0C602D119CD33F600387D3E /* ChannelViewController.m */,
+				A0C602D319CD340C00387D3E /* ChannelDetailViewController.h */,
+				A0C602D419CD340C00387D3E /* ChannelDetailViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -325,12 +340,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0C602D519CD340C00387D3E /* ChannelDetailViewController.m in Sources */,
 				3DFD0B0C19CD2CB4005CB071 /* LoginViewController.m in Sources */,
 				A0C602AC19CD222900387D3E /* ViewController.m in Sources */,
+				A0C602D219CD33F600387D3E /* ChannelViewController.m in Sources */,
 				A0C602A319CD222900387D3E /* AppDelegate.m in Sources */,
 				3DFD0B1219CD2D4A005CB071 /* DefaultsManager.m in Sources */,
 				A0C6029F19CD222900387D3E /* main.m in Sources */,
 				3DFD0B0F19CD2D0E005CB071 /* APIHandler.m in Sources */,
+				A0C602CF19CD33BB00387D3E /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
