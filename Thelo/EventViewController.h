@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "Event.h"
 
 @interface EventViewController : UIViewController <MKMapViewDelegate>
+
+@property (strong, nonatomic) Event *event;
 
 @end

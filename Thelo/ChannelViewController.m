@@ -8,6 +8,7 @@
 
 #import "ChannelViewController.h"
 #import "EventViewController.h"
+#import "Event.h"
 
 @interface ChannelViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *channelLabel;
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *radius;
 @property (weak, nonatomic) IBOutlet UIButton *subscribedButton;
 @property (nonatomic) BOOL subscribed;
+@property (strong, nonatomic) NSArray *events;
 @end
 
 @implementation ChannelViewController
@@ -28,7 +30,12 @@
     self.channelTable.delegate = self;
     self.channelTable.dataSource = self;
     self.channelTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [APIHandler getEventsForChannel:self.channel withSuccessHandler:^(NSArray *events) {
+        self.events = events;
+        [self.channelTable reloadData];
+    } failureHandler:nil];
 }
+
 - (IBAction)subscribeChange:(id)sender {
     if (!self.subscribed) {
         [self.subscribedButton setTitle: @"Not Subscribed" forState: UIControlStateNormal];
@@ -62,12 +69,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return [self.events count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"general"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld", indexPath.row];
+    Event *event = [self.events objectAtIndex:indexPath.row];
+    cell.textLabel.text = event.title;
     return cell;
 }
 
@@ -75,7 +83,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"event select"]) {
         if ([segue.destinationViewController isKindOfClass:[EventViewController class]]) {
-            NSLog(@"We push to chanel view controller");
+            EventViewController *evc = (EventViewController *)segue.destinationViewController;
+            UITableViewCell *cell = (UITableViewCell *)sender;
+            NSIndexPath *indexPath = [self.channelTable indexPathForCell:cell];
+            evc.event = [self.events objectAtIndex:indexPath.row];
         }
     }
 }

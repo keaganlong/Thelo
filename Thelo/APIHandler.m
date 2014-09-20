@@ -11,9 +11,11 @@
 #import "Channel.h"
 #import "Event.h"
 
-#define BASE_API_URL @"http://localhost:3000"
-#define CHANNEL_URL @"/channel"
-#define EVENTS_URL @"/events"
+#define BASE_API_URL @"http://vast-badlands-7635.herokuapp.com"
+#define GET_CHANNELS_URL @"/channel/getAll"
+#define CREATE_CHANNEL_URL @"/channel/addOne"
+#define GET_EVENTS_URL @"/event/getAllEventsWithinRange"
+#define CREATE_EVENT_URL @"/event/addOne"
 
 @interface APIHandler ()
 @property (strong, nonatomic) APIHandler *instance;
@@ -26,7 +28,7 @@
 }
 
 - (void)getChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, CHANNEL_URL]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, GET_CHANNELS_URL]];
     NSURLRequest *request = [self _createGETRequestWithURL:url andParameters:nil];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -55,16 +57,20 @@
     [operation start];
 }
 
-- (void)getEventsForChannel:(NSString *)channel withSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
+- (void)getEventsForChannel:(Channel *)channel withSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
     CLLocation *location = [LocationManager currentLocation];
     CLLocationDegrees lat = location.coordinate.latitude;
     CLLocationDegrees lng = location.coordinate.longitude;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@/%@/%f/%f/%d", BASE_API_URL, EVENTS_URL, channel, lat, lng, 1000]];
-    NSURLRequest *request = [self _createGETRequestWithURL:url andParameters:nil];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, GET_EVENTS_URL]];
+    NSDictionary *dictionary = @{@"channelName":channel.name,
+                                 @"lat":[NSNumber numberWithDouble:lat],
+                                 @"lng":[NSNumber numberWithDouble:lng],
+                                 @"range":[NSNumber numberWithInt:1000]};
+    NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"GET response %@ %@", responseObject, [url absoluteString]);
+        NSLog(@"POST response %@ %@", responseObject, [url absoluteString]);
         [self _onMainQueue:^{
             if (success) {
                 NSDictionary *responseDict = (NSDictionary *)responseObject;
@@ -73,7 +79,7 @@
                     Event *event = [Event new];
                     event.title = eventData[@"data"];
                     event.eventDescription = eventData[@"description"];
-                    event.coordinate = CLLocationCoordinate2DMake([eventData[@"lat"] doubleValue], [eventData[@"lng"] doubleValue]);
+                    event.coordinates = CLLocationCoordinate2DMake([eventData[@"lat"] doubleValue], [eventData[@"lng"] doubleValue]);
                     event.startTime = [NSDate dateWithTimeIntervalSince1970:[eventData[@"startDate"] doubleValue]];
                     event.endTime = [NSDate dateWithTimeIntervalSince1970:[eventData[@"endDate"] doubleValue]];
                     event.comments = eventData[@"comments"];
@@ -83,7 +89,40 @@
             }
         }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"GET failed %@ %@", error.localizedDescription, [url absoluteString]);
+        NSLog(@"POST failed %@ %@", error.localizedDescription, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (failure) {
+                failure(error);
+            }
+        }];
+    }];
+    [operation start];
+}
+
+- (void)createEvent:(Event *)event inChannel:(Channel *)channel withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, CREATE_EVENT_URL]];
+    CLLocationCoordinate2D coordinates = event.coordinates;
+    CLLocationDegrees lat = coordinates.latitude;
+    CLLocationDegrees lng = coordinates.longitude;
+    NSDictionary *dictionary = @{@"channelName":channel.name,
+                                 @"lat":[NSNumber numberWithDouble:lat],
+                                 @"lng":[NSNumber numberWithDouble:lng],
+                                 @"startDate":[NSNumber numberWithDouble:[event.startTime timeIntervalSince1970]],
+                                 @"endDate":[NSNumber numberWithDouble:[event.endTime timeIntervalSince1970]],
+                                 @"title":event.title,
+                                 @"description":event.eventDescription};
+    NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST response %@ %@", responseObject, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (success) {
+                success();
+            }
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"POST failed %@ %@", error.localizedDescription, [url absoluteString]);
         [self _onMainQueue:^{
             if (failure) {
                 failure(error);
@@ -102,8 +141,12 @@
     [[self instance] getChannelsWithSuccessHandler:success failureHandler:failure];
 }
    
-+ (void)getEventsForChannel:(NSString *)channel withSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
++ (void)getEventsForChannel:(Channel *)channel withSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
     [[self instance] getEventsForChannel:channel withSuccessHandler:success failureHandler:failure];
+}
+
++ (void)createEvent:(Event *)event inChannel:(Channel *)channel withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure {
+    [[self instance] createEvent:event inChannel:channel withSuccessHandler:success failureHandler:failure];
 }
 
 #pragma mark - Private methods
