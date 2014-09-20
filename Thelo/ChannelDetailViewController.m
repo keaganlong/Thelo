@@ -18,11 +18,6 @@
 @property (nonatomic) IBOutlet MKMapItem *mapItem;
 @end
 
-@interface ChannelDetailViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@end
 
 @implementation ChannelDetailViewController
 
