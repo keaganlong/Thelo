@@ -11,6 +11,7 @@
 
 #define BASE_API_URL @"http://localhost:3000"
 #define CHANNEL_URL @"/channel"
+#define EVENTS_URL @"/events"
 
 @interface APIHandler ()
 @property (strong, nonatomic) APIHandler *instance;
@@ -24,7 +25,35 @@
 
 - (void)getChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, CHANNEL_URL]];
-    NSURLRequest *request = [self _createGETRequestWithURL:url];
+    NSURLRequest *request = [self _createGETRequestWithURL:url andParameters:nil];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"GET response %@ %@", responseObject, [[request URL] absoluteString]);
+        [self _onMainQueue:^{
+            if (success) {
+                NSDictionary *responseDict = (NSDictionary *)responseObject;
+                NSMutableArray *channels = [[NSMutableArray alloc] init];
+                for (NSDictionary *channel in responseDict[@"channels"]) {
+                    [channels addObject:channel[@"name"]];
+                }
+                success(channels);
+            }
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"GET failed %@ %@", error.localizedDescription, [[request URL] absoluteString]);
+        [self _onMainQueue:^{
+            if (failure) {
+                failure(error);
+            }
+        }];
+    }];
+    [operation start];
+}
+
+- (void)getEventsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, CHANNEL_URL]];
+    NSURLRequest *request = [self _createGETRequestWithURL:url andParameters:nil];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -72,10 +101,22 @@
     return request;
 }
 
-- (NSURLRequest *)_createGETRequestWithURL:(NSURL *)url {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
-    return request;
+- (NSURLRequest *)_createGETRequestWithURL:(NSURL *)url andParameters:(NSDictionary *)dictionary {
+    if (dictionary) {
+        NSMutableArray *kvPairs = [NSMutableArray new];
+        for (NSString *key in dictionary) {
+            [kvPairs addObject:[NSString stringWithFormat:@"%@=%@", key, dictionary[key]]];
+        }
+        NSString *valueString = [kvPairs componentsJoinedByString:@"&"];
+        NSURL *valueURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@", [url absoluteString], valueString]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:valueURL];
+        [request setHTTPMethod:@"GET"];
+        return request;
+    } else {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [request setHTTPMethod:@"GET"];
+        return request;
+    }
 }
 
 - (void)_onMainQueue:(void (^)())handler {

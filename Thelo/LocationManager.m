@@ -34,6 +34,14 @@
 + (void)requestPermissions {
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
         [[LocationManager manager] requestAlwaysAuthorization];
+    } else if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedAlways) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Permission needed"
+                                            message:@"Thelo needs location services to function properly!"
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Got it." style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
     }
 }
 
