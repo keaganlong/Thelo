@@ -8,6 +8,8 @@
 
 #import "APIHandler.h"
 #import <AFNetworking/AFNetworking.h>
+#import "Channel.h"
+#import "Event.h"
 
 #define BASE_API_URL @"http://localhost:3000"
 #define CHANNEL_URL @"/channel"
@@ -35,7 +37,9 @@
                 NSDictionary *responseDict = (NSDictionary *)responseObject;
                 NSMutableArray *channels = [[NSMutableArray alloc] init];
                 for (NSDictionary *channel in responseDict[@"channels"]) {
-                    [channels addObject:channel[@"name"]];
+                    Channel *newChannel = [Channel new];
+                    newChannel.name = channel[@"name"];
+                    [channels addObject:newChannel];
                 }
                 success(channels);
             }
@@ -51,8 +55,11 @@
     [operation start];
 }
 
-- (void)getEventsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, CHANNEL_URL]];
+- (void)getEventsForChannel:(NSString *)channel withSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
+    CLLocation *location = [LocationManager currentLocation];
+    CLLocationDegrees lat = location.coordinate.latitude;
+    CLLocationDegrees lng = location.coordinate.longitude;
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@/%@/%f/%f/%d", BASE_API_URL, EVENTS_URL, channel, lat, lng, 1000]];
     NSURLRequest *request = [self _createGETRequestWithURL:url andParameters:nil];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -61,11 +68,18 @@
         [self _onMainQueue:^{
             if (success) {
                 NSDictionary *responseDict = (NSDictionary *)responseObject;
-                NSMutableArray *channels = [[NSMutableArray alloc] init];
-                for (NSDictionary *channel in responseDict[@"channels"]) {
-                    [channels addObject:channel[@"name"]];
+                NSMutableArray *events = [NSMutableArray new];
+                for (NSDictionary *eventData in responseDict[@"events"]) {
+                    Event *event = [Event new];
+                    event.title = eventData[@"data"];
+                    event.eventDescription = eventData[@"description"];
+                    event.coordinate = CLLocationCoordinate2DMake([eventData[@"lat"] doubleValue], [eventData[@"lng"] doubleValue]);
+                    event.startTime = [NSDate dateWithTimeIntervalSince1970:[eventData[@"startDate"] doubleValue]];
+                    event.endTime = [NSDate dateWithTimeIntervalSince1970:[eventData[@"endDate"] doubleValue]];
+                    event.comments = eventData[@"comments"];
+                    [events addObject:event];
                 }
-                success(channels);
+                success(events);
             }
         }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -83,9 +97,13 @@
 + (void)loginWithSuccessHandler:(void (^)())success failureHandler:(void(^)(NSError *))failure {
     [[self instance] loginWithSuccessHandler:success failureHandler:failure];
 }
-   
+
 + (void)getChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
-   [[self instance] getChannelsWithSuccessHandler:success failureHandler:failure];
+    [[self instance] getChannelsWithSuccessHandler:success failureHandler:failure];
+}
+   
++ (void)getEventsForChannel:(NSString *)channel withSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure {
+    [[self instance] getEventsForChannel:channel withSuccessHandler:success failureHandler:failure];
 }
 
 #pragma mark - Private methods

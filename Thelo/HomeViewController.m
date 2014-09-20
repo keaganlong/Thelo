@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import "ChannelViewController.h"
+#import "Channel.h"
 
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *channelTable;
@@ -23,6 +24,7 @@
     self.channelTable.dataSource = self;
     self.channelTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"Device ID: %@", DEVICE_ID]];
+    NSLog(@"Currently at: %@", [LocationManager currentLocation]);
     [LocationManager registerRegionAtLatitude:33.777229 longitude:-84.396247 withRadius:300.0 andIdentifier:@"Klaus"];
     [APIHandler getChannelsWithSuccessHandler:^(NSArray *newChannels) {
         self.channels = newChannels;
@@ -46,7 +48,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"general"];
-    cell.textLabel.text = [self.channels objectAtIndex:indexPath.row];
+    Channel *channel = [self.channels objectAtIndex:indexPath.row];
+    cell.textLabel.text = channel.name;
     return cell;
 }
 
@@ -56,7 +59,8 @@
         if ([segue.destinationViewController isKindOfClass:[ChannelViewController class]]) {
             ChannelViewController *cvc = (ChannelViewController *)segue.destinationViewController;
             UITableViewCell *cell = (UITableViewCell *)sender;
-            cvc.channelName = cell.textLabel.text;
+            NSIndexPath *indexPath = [self.channelTable indexPathForCell:cell];
+            cvc.channel = [self.channels objectAtIndex:indexPath.row];
         }
     }
 }

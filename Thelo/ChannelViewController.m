@@ -22,13 +22,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.channelLabel.text = self.channelName;
+    self.channelLabel.text = self.channel.name;
     [_notificationRadiusControl addTarget:self action:@selector(sliderChanged:)
        forControlEvents:UIControlEventValueChanged];
     self.channelTable.delegate = self;
     self.channelTable.dataSource = self;
     self.channelTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-
 }
 - (IBAction)subscribeChange:(id)sender {
     if (!self.subscribed) {
@@ -43,9 +42,9 @@
 }
 
 #pragma mark - ARC
-- (void)setChannelName:(NSString *)channelName {
-    _channelName = channelName;
-    self.title = channelName;
+- (void)setChannel:(Channel *)channel {
+    _channel = channel;
+    self.title = channel.name;
 }
 
 -(IBAction)sliderChanged:(id)sender{

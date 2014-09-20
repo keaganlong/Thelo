@@ -12,5 +12,6 @@
 
 + (void)loginWithSuccessHandler:(void (^)())success failureHandler:(void(^)(NSError *))failure;
 + (void)getChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure;
++ (void)getEventsForChannel:(NSString *)channel withSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure;
 
 @end
