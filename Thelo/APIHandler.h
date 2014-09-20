@@ -10,4 +10,6 @@
 
 @interface APIHandler : NSObject
 
++ (void)loginWithSuccessHandler:(void (^)())success failureHandler:(void(^)(NSError *))failure;
+
 @end

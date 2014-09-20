@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ChannelViewController : UIViewController
-
+@property (strong, nonatomic) NSString *channelName;
 @end

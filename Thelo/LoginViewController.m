@@ -18,6 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     [self performSelector:@selector(_login) withObject:nil afterDelay:1.0];
 }
 
@@ -25,8 +28,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - IBAction
 
 #pragma mark - Navigation
 
@@ -39,7 +40,16 @@
 
 #pragma mark - Private methods
 - (void)_login {
-    [self performSegueWithIdentifier:@"login" sender:nil];
+    [APIHandler loginWithSuccessHandler:^{
+        [self performSegueWithIdentifier:@"login" sender:nil];
+    } failureHandler:^(NSError *error) {
+        [self _alertWithError:error];
+    }];
+}
+
+- (void)_alertWithError:(NSError *)error {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
