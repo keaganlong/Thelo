@@ -8,12 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define DEVICE_ID [[[UIDevice currentDevice] identifierForVender] UUIDString]
+
 @interface DefaultsManager : NSObject
-
-+ (NSString *)username;
-+ (NSString *)password;
-
-+ (void)setUsername:(NSString *)username;
-+ (void)setPassword:(NSString *)password;
 
 @end
