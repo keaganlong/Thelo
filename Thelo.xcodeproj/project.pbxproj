@@ -14,6 +14,7 @@
 		3DFD0B1819CDDA81005CB071 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD0B1719CDDA81005CB071 /* LocationManager.m */; };
 		3DFD0B1D19CE17E2005CB071 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD0B1C19CE17E2005CB071 /* Channel.m */; };
 		3DFD0B2119CE1808005CB071 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD0B2019CE1808005CB071 /* Event.m */; };
+		3DFD0B2319CE20CC005CB071 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DFD0B2219CE20CC005CB071 /* CoreLocation.framework */; };
 		A0B1EC3819CDEAD200665E53 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B1EC3719CDEAD200665E53 /* MapKit.framework */; };
 		A0C6029319CD222900387D3E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029219CD222900387D3E /* Foundation.framework */; };
 		A0C6029519CD222900387D3E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029419CD222900387D3E /* CoreGraphics.framework */; };
@@ -61,6 +62,7 @@
 		3DFD0B1C19CE17E2005CB071 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
 		3DFD0B1F19CE1808005CB071 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		3DFD0B2019CE1808005CB071 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		3DFD0B2219CE20CC005CB071 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		7054201540644A8998D8A85A /* Pods-Thelo.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thelo.xcconfig"; path = "Pods/Pods-Thelo.xcconfig"; sourceTree = "<group>"; };
 		856CEF5C5BFE4F1D936BDB1A /* libPods-Thelo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Thelo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B1EC3719CDEAD200665E53 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -97,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DFD0B2319CE20CC005CB071 /* CoreLocation.framework in Frameworks */,
 				A0B1EC3819CDEAD200665E53 /* MapKit.framework in Frameworks */,
 				A0C6029519CD222900387D3E /* CoreGraphics.framework in Frameworks */,
 				A0C6029719CD222900387D3E /* UIKit.framework in Frameworks */,
@@ -182,6 +185,7 @@
 		A0C6029119CD222900387D3E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3DFD0B2219CE20CC005CB071 /* CoreLocation.framework */,
 				A0B1EC3719CDEAD200665E53 /* MapKit.framework */,
 				A0C6029219CD222900387D3E /* Foundation.framework */,
 				A0C6029419CD222900387D3E /* CoreGraphics.framework */,
