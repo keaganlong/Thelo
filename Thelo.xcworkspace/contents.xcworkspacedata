@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ChannelViewController.h">
-   </FileRef>
-   <FileRef
-      location = "group:ChannelViewController.m">
-   </FileRef>
-   <FileRef
       location = "group:Thelo.xcodeproj">
    </FileRef>
    <FileRef

@@ -9,19 +9,46 @@
 #import "ChannelViewController.h"
 
 @interface ChannelViewController () <UITableViewDelegate, UITableViewDataSource>
-
+@property (weak, nonatomic) IBOutlet UILabel *channelLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *notificationRadiusControl;
+@property (weak, nonatomic) IBOutlet UITableView *channelTable;
+@property (weak, nonatomic) IBOutlet UILabel *radius;
+@property (weak, nonatomic) IBOutlet UIButton *subscribedButton;
+@property (nonatomic) BOOL subscribed;
 @end
 
 @implementation ChannelViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.channelLabel.text = self.channelName;
+    [_notificationRadiusControl addTarget:self action:@selector(sliderChanged:)
+       forControlEvents:UIControlEventValueChanged];
+    self.channelTable.delegate = self;
+    self.channelTable.dataSource = self;
+    self.channelTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
+}
+- (IBAction)subscribeChange:(id)sender {
+    if (!self.subscribed) {
+        [self.subscribedButton setTitle: @"Not Subscribed" forState: UIControlStateNormal];
+        self.subscribed = YES;
+    }
+    else {
+        [self.subscribedButton setTitle: @"Subscribed √" forState: UIControlStateNormal];
+        self.subscribed = NO;
+
+    }
 }
 
 #pragma mark - ARC
 - (void)setChannelName:(NSString *)channelName {
     _channelName = channelName;
     self.title = channelName;
+}
+
+-(IBAction)sliderChanged:(id)sender{
+   _radius.text = [_notificationRadiusControl titleForSegmentAtIndex:_notificationRadiusControl.selectedSegmentIndex];
 }
 
 #pragma mark - UITableViewDelegate
@@ -44,13 +71,13 @@
     return cell;
 }
 
-#pragma mark - Navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"channel select"]) {
-        if ([segue.destinationViewController isKindOfClass:[ChannelViewController class]]) {
-            
-        }
-    }
-}
+//#pragma mark - Navigation
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    if ([segue.identifier isEqualToString:@"channel select"]) {
+//        if ([segue.destinationViewController isKindOfClass:[ChannelViewController class]]) {
+//            NSLog(@"We push to chanel view controller");
+//        }
+//    }
+//}
 
 @end
