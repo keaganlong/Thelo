@@ -21,6 +21,8 @@
     self.channelTable.delegate = self;
     self.channelTable.dataSource = self;
     self.channelTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"Device ID: %@", DEVICE_ID]];
+    [LocationManager registerRegionAtLatitude:33.777229 longitude:-84.396247 withRadius:300.0 andIdentifier:@"test notification"];
 }
 
 #pragma mark - UITableViewDelegate

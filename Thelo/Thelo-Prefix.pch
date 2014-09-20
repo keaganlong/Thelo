@@ -15,4 +15,6 @@
     #import <Foundation/Foundation.h>
     #import "APIHandler.h"
     #import "DefaultsManager.h"
+    #import "NotificationManager.h"
+    #import "LocationManager.h"
 #endif

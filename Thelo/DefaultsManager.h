@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define DEVICE_ID [[[UIDevice currentDevice] identifierForVender] UUIDString]
+#define DEVICE_ID [[[UIDevice currentDevice] identifierForVendor] UUIDString]
 
 @interface DefaultsManager : NSObject
 

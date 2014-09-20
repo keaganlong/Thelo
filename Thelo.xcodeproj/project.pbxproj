@@ -10,6 +10,9 @@
 		3DFD0B0C19CD2CB4005CB071 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD0B0B19CD2CB4005CB071 /* LoginViewController.m */; };
 		3DFD0B0F19CD2D0E005CB071 /* APIHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD0B0E19CD2D0E005CB071 /* APIHandler.m */; };
 		3DFD0B1219CD2D4A005CB071 /* DefaultsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD0B1119CD2D4A005CB071 /* DefaultsManager.m */; };
+		3DFD0B1519CDD546005CB071 /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD0B1419CDD546005CB071 /* NotificationManager.m */; };
+		3DFD0B1819CDDA81005CB071 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD0B1719CDDA81005CB071 /* LocationManager.m */; };
+		3DFD0B1A19CDDADE005CB071 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DFD0B1919CDDADE005CB071 /* CoreLocation.framework */; };
 		A0C6029319CD222900387D3E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029219CD222900387D3E /* Foundation.framework */; };
 		A0C6029519CD222900387D3E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029419CD222900387D3E /* CoreGraphics.framework */; };
 		A0C6029719CD222900387D3E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029619CD222900387D3E /* UIKit.framework */; };
@@ -48,6 +51,11 @@
 		3DFD0B0E19CD2D0E005CB071 /* APIHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIHandler.m; sourceTree = "<group>"; };
 		3DFD0B1019CD2D4A005CB071 /* DefaultsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultsManager.h; sourceTree = "<group>"; };
 		3DFD0B1119CD2D4A005CB071 /* DefaultsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultsManager.m; sourceTree = "<group>"; };
+		3DFD0B1319CDD546005CB071 /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationManager.h; sourceTree = "<group>"; };
+		3DFD0B1419CDD546005CB071 /* NotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationManager.m; sourceTree = "<group>"; };
+		3DFD0B1619CDDA81005CB071 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		3DFD0B1719CDDA81005CB071 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		3DFD0B1919CDDADE005CB071 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		7054201540644A8998D8A85A /* Pods-Thelo.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thelo.xcconfig"; path = "Pods/Pods-Thelo.xcconfig"; sourceTree = "<group>"; };
 		856CEF5C5BFE4F1D936BDB1A /* libPods-Thelo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Thelo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C6028F19CD222900387D3E /* Thelo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thelo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DFD0B1A19CDDADE005CB071 /* CoreLocation.framework in Frameworks */,
 				A0C6029519CD222900387D3E /* CoreGraphics.framework in Frameworks */,
 				A0C6029719CD222900387D3E /* UIKit.framework in Frameworks */,
 				A0C6029319CD222900387D3E /* Foundation.framework in Frameworks */,
@@ -125,6 +134,10 @@
 				3DFD0B0E19CD2D0E005CB071 /* APIHandler.m */,
 				3DFD0B1019CD2D4A005CB071 /* DefaultsManager.h */,
 				3DFD0B1119CD2D4A005CB071 /* DefaultsManager.m */,
+				3DFD0B1319CDD546005CB071 /* NotificationManager.h */,
+				3DFD0B1419CDD546005CB071 /* NotificationManager.m */,
+				3DFD0B1619CDDA81005CB071 /* LocationManager.h */,
+				3DFD0B1719CDDA81005CB071 /* LocationManager.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -152,6 +165,7 @@
 		A0C6029119CD222900387D3E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3DFD0B1919CDDADE005CB071 /* CoreLocation.framework */,
 				A0C6029219CD222900387D3E /* Foundation.framework */,
 				A0C6029419CD222900387D3E /* CoreGraphics.framework */,
 				A0C6029619CD222900387D3E /* UIKit.framework */,
@@ -343,7 +357,9 @@
 				A0C602D519CD340C00387D3E /* ChannelDetailViewController.m in Sources */,
 				3DFD0B0C19CD2CB4005CB071 /* LoginViewController.m in Sources */,
 				A0C602AC19CD222900387D3E /* ViewController.m in Sources */,
+				3DFD0B1819CDDA81005CB071 /* LocationManager.m in Sources */,
 				A0C602D219CD33F600387D3E /* ChannelViewController.m in Sources */,
+				3DFD0B1519CDD546005CB071 /* NotificationManager.m in Sources */,
 				A0C602A319CD222900387D3E /* AppDelegate.m in Sources */,
 				3DFD0B1219CD2D4A005CB071 /* DefaultsManager.m in Sources */,
 				A0C6029F19CD222900387D3E /* main.m in Sources */,
