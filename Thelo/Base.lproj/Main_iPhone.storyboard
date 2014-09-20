@@ -33,7 +33,6 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< Updated upstream
             <point key="canvasLocation" x="-260" y="85"/>
         </scene>
         <!--Navigation Controller-->
@@ -51,9 +50,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hIN-T7-WKQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="240" y="65"/>
-=======
-            <point key="canvasLocation" x="131" y="71"/>
->>>>>>> Stashed changes
         </scene>
         <!--View Controller-->
         <scene sceneID="aBX-xk-I12">
@@ -79,26 +75,12 @@
                                 <rect key="frame" x="20" y="250" width="280" height="298"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-<<<<<<< Updated upstream
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="dzP-Nf-tp8">
                                         <rect key="frame" x="0.0" y="22" width="280" height="44"/>
-=======
-                                    <tableViewCell appearanceType="aqua" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="jGe-AL-pow" rowHeight="50" style="IBUITableViewCellStyleDefault" id="dzP-Nf-tp8">
-                                        <rect key="frame" x="0.0" y="22" width="280" height="50"/>
->>>>>>> Stashed changes
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dzP-Nf-tp8" id="NRh-Md-cC1">
-                                            <rect key="frame" x="0.0" y="0.0" width="247" height="49"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="247" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Alex" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jGe-AL-pow">
-                                                    <rect key="frame" x="15" y="0.0" width="230" height="49"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="YVg-8Z-2Hb" kind="push" id="1sN-fd-weu"/>
