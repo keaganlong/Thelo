@@ -1,4 +1,4 @@
 Thelo
 =====
 
-iOS rendition of 
+iOS rendition of Thelo
