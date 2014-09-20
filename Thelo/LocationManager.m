@@ -27,6 +27,12 @@
     }
 }
 
++ (void)clearRegisterRegions {
+    for (CLCircularRegion *monReg in [[LocationManager manager] monitoredRegions]) {
+        [[LocationManager manager] stopMonitoringForRegion:monReg];
+    }
+}
+
 + (CLLocation *)currentLocation {
     return [[LocationManager manager] location];
 }

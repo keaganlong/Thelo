@@ -7,7 +7,7 @@
 //
 
 #import "ChannelViewController.h"
-#import "ChannelDetailViewController.h"
+#import "EventViewController.h"
 
 @interface ChannelViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *channelLabel;
@@ -74,7 +74,7 @@
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"event select"]) {
-        if ([segue.destinationViewController isKindOfClass:[ChannelDetailViewController class]]) {
+        if ([segue.destinationViewController isKindOfClass:[EventViewController class]]) {
             NSLog(@"We push to chanel view controller");
         }
     }

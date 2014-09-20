@@ -33,7 +33,7 @@
 		A0C602C119CD222900387D3E /* TheloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602C019CD222900387D3E /* TheloTests.m */; };
 		A0C602CF19CD33BB00387D3E /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602CE19CD33BB00387D3E /* HomeViewController.m */; };
 		A0C602D219CD33F600387D3E /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602D119CD33F600387D3E /* ChannelViewController.m */; };
-		A0C602D519CD340C00387D3E /* ChannelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602D419CD340C00387D3E /* ChannelDetailViewController.m */; };
+		A0C602D519CD340C00387D3E /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602D419CD340C00387D3E /* EventViewController.m */; };
 		F78BE570E5434E1FAE06713E /* libPods-Thelo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 856CEF5C5BFE4F1D936BDB1A /* libPods-Thelo.a */; };
 /* End PBXBuildFile section */
 
@@ -90,8 +90,8 @@
 		A0C602CE19CD33BB00387D3E /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		A0C602D019CD33F600387D3E /* ChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewController.h; sourceTree = "<group>"; };
 		A0C602D119CD33F600387D3E /* ChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewController.m; sourceTree = "<group>"; };
-		A0C602D319CD340C00387D3E /* ChannelDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelDetailViewController.h; sourceTree = "<group>"; };
-		A0C602D419CD340C00387D3E /* ChannelDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelDetailViewController.m; sourceTree = "<group>"; };
+		A0C602D319CD340C00387D3E /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
+		A0C602D419CD340C00387D3E /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,8 +130,8 @@
 				A0C602CE19CD33BB00387D3E /* HomeViewController.m */,
 				A0C602D019CD33F600387D3E /* ChannelViewController.h */,
 				A0C602D119CD33F600387D3E /* ChannelViewController.m */,
-				A0C602D319CD340C00387D3E /* ChannelDetailViewController.h */,
-				A0C602D419CD340C00387D3E /* ChannelDetailViewController.m */,
+				A0C602D319CD340C00387D3E /* EventViewController.h */,
+				A0C602D419CD340C00387D3E /* EventViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -379,7 +379,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0C602D519CD340C00387D3E /* ChannelDetailViewController.m in Sources */,
+				A0C602D519CD340C00387D3E /* EventViewController.m in Sources */,
 				3DFD0B1D19CE17E2005CB071 /* Channel.m in Sources */,
 				3DFD0B0C19CD2CB4005CB071 /* LoginViewController.m in Sources */,
 				3DFD0B2119CE1808005CB071 /* Event.m in Sources */,

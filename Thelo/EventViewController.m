@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Alex Stelea. All rights reserved.
 //
 
-#import "ChannelDetailViewController.h"
+#import "EventViewController.h"
 #import <MapKit/MapKit.h>
 
-@interface ChannelDetailViewController () <MKMapViewDelegate>
+@interface EventViewController () <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -19,7 +19,7 @@
 @end
 
 
-@implementation ChannelDetailViewController
+@implementation EventViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

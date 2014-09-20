@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@interface ChannelDetailViewController : UIViewController <MKMapViewDelegate>
+@interface EventViewController : UIViewController <MKMapViewDelegate>
 
 @end
