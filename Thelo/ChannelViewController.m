@@ -7,6 +7,7 @@
 //
 
 #import "ChannelViewController.h"
+#import "ChannelDetailViewController.h"
 
 @interface ChannelViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *channelLabel;
@@ -71,13 +72,13 @@
     return cell;
 }
 
-//#pragma mark - Navigation
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([segue.identifier isEqualToString:@"channel select"]) {
-//        if ([segue.destinationViewController isKindOfClass:[ChannelViewController class]]) {
-//            NSLog(@"We push to chanel view controller");
-//        }
-//    }
-//}
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"event select"]) {
+        if ([segue.destinationViewController isKindOfClass:[ChannelDetailViewController class]]) {
+            NSLog(@"We push to chanel view controller");
+        }
+    }
+}
 
 @end

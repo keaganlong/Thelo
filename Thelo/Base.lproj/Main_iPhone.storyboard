@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A361p" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -134,32 +133,19 @@
                                 <rect key="frame" x="16" y="256" width="281" height="284"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="general" id="bX6-Rw-TDf">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="general" id="bX6-Rw-TDf">
                                         <rect key="frame" x="0.0" y="22" width="260" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bX6-Rw-TDf" id="kxb-X1-48G">
                                             <rect key="frame" x="0.0" y="0.0" width="260" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="NiC-xJ-FqG" kind="push" identifier="event select" id="5VE-dZ-vl0"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uRj-V3-X13">
-                                <rect key="frame" x="30" y="181" width="246" height="29"/>
-                                <segments>
-                                    <segment title="50m"/>
-                                    <segment title="100m"/>
-                                    <segment title="250m"/>
-                                    <segment title="500m"/>
-                                    <segment title="1000m"/>
-                                </segments>
-                            </segmentedControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5Q-dH-hKM">
-                                <rect key="frame" x="214" y="151" width="62" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjS-cB-q4v">
                                 <rect key="frame" x="164" y="96" width="133" height="30"/>
                                 <state key="normal" title="Subscribed √">
@@ -169,6 +155,16 @@
                                     <action selector="subscribeChange:" destination="YVg-8Z-2Hb" eventType="touchUpInside" id="x6l-qN-Meh"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uRj-V3-X13">
+                                <rect key="frame" x="37" y="175" width="246" height="29"/>
+                                <segments>
+                                    <segment title="50m"/>
+                                    <segment title="100m"/>
+                                    <segment title="250m"/>
+                                    <segment title="500m"/>
+                                    <segment title="1000m"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -177,9 +173,7 @@
                         <outlet property="channelLabel" destination="W7G-pD-GII" id="3iw-Wd-2Va"/>
                         <outlet property="channelTable" destination="xlv-WX-Yd1" id="b5I-aJ-IDp"/>
                         <outlet property="notificationRadiusControl" destination="uRj-V3-X13" id="Oxo-P9-wgC"/>
-                        <outlet property="radius" destination="R5Q-dH-hKM" id="Ep7-RC-upY"/>
                         <outlet property="subscribedButton" destination="bjS-cB-q4v" id="fIH-f6-3bK"/>
-                        <segue destination="NiC-xJ-FqG" kind="push" id="qg7-1S-ePd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OKE-fA-zIh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -198,24 +192,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mBl-zf-R72">
-                                <rect key="frame" x="28" y="268" width="264" height="163"/>
-                            </mapView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cm5-y4-tHO">
-                                <rect key="frame" x="139" y="95" width="42" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Free food @ " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cm5-y4-tHO">
+                                <rect key="frame" x="16" y="90" width="97" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdH-mR-244">
-                                <rect key="frame" x="139" y="132" width="42" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="x mins ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdH-mR-244">
+                                <rect key="frame" x="230" y="90" width="84" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Smq-A6-NyQ">
+                                <rect key="frame" x="7" y="132" width="307" height="164"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Y3M-ba-VvI"/>
+                    <connections>
+                        <outlet property="mapView" destination="Smq-A6-NyQ" id="dW2-I0-aWv"/>
+                        <outlet property="timeLabel" destination="cdH-mR-244" id="bFW-wl-ids"/>
+                        <outlet property="titleLabel" destination="cm5-y4-tHO" id="i6v-cs-cvn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="owp-eg-Pa8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

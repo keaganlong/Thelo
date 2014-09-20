@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface ChannelDetailViewController : UIViewController
+@interface ChannelDetailViewController : UIViewController <MKMapViewDelegate>
 
 @end
