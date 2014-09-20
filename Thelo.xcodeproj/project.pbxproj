@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A0C6029319CD222900387D3E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029219CD222900387D3E /* Foundation.framework */; };
+		A0C6029519CD222900387D3E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029419CD222900387D3E /* CoreGraphics.framework */; };
+		A0C6029719CD222900387D3E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029619CD222900387D3E /* UIKit.framework */; };
+		A0C6029D19CD222900387D3E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0C6029B19CD222900387D3E /* InfoPlist.strings */; };
+		A0C6029F19CD222900387D3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C6029E19CD222900387D3E /* main.m */; };
+		A0C602A319CD222900387D3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602A219CD222900387D3E /* AppDelegate.m */; };
+		A0C602A619CD222900387D3E /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C602A419CD222900387D3E /* Main_iPhone.storyboard */; };
+		A0C602A919CD222900387D3E /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C602A719CD222900387D3E /* Main_iPad.storyboard */; };
+		A0C602AC19CD222900387D3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602AB19CD222900387D3E /* ViewController.m */; };
+		A0C602AE19CD222900387D3E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0C602AD19CD222900387D3E /* Images.xcassets */; };
+		A0C602B519CD222900387D3E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C602B419CD222900387D3E /* XCTest.framework */; };
+		A0C602B619CD222900387D3E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029219CD222900387D3E /* Foundation.framework */; };
+		A0C602B719CD222900387D3E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029619CD222900387D3E /* UIKit.framework */; };
+		A0C602BF19CD222900387D3E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0C602BD19CD222900387D3E /* InfoPlist.strings */; };
+		A0C602C119CD222900387D3E /* TheloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C602C019CD222900387D3E /* TheloTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A0C602B819CD222900387D3E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0C6028719CD222900387D3E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0C6028E19CD222900387D3E;
+			remoteInfo = Thelo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A0C6028F19CD222900387D3E /* Thelo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thelo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0C6029219CD222900387D3E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A0C6029419CD222900387D3E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A0C6029619CD222900387D3E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A0C6029A19CD222900387D3E /* Thelo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Thelo-Info.plist"; sourceTree = "<group>"; };
+		A0C6029C19CD222900387D3E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A0C6029E19CD222900387D3E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A0C602A019CD222900387D3E /* Thelo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Thelo-Prefix.pch"; sourceTree = "<group>"; };
+		A0C602A119CD222900387D3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A0C602A219CD222900387D3E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A0C602A519CD222900387D3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		A0C602A819CD222900387D3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		A0C602AA19CD222900387D3E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A0C602AB19CD222900387D3E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A0C602AD19CD222900387D3E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A0C602B319CD222900387D3E /* TheloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0C602B419CD222900387D3E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		A0C602BC19CD222900387D3E /* TheloTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TheloTests-Info.plist"; sourceTree = "<group>"; };
+		A0C602BE19CD222900387D3E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A0C602C019CD222900387D3E /* TheloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TheloTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A0C6028C19CD222900387D3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0C6029519CD222900387D3E /* CoreGraphics.framework in Frameworks */,
+				A0C6029719CD222900387D3E /* UIKit.framework in Frameworks */,
+				A0C6029319CD222900387D3E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0C602B019CD222900387D3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0C602B519CD222900387D3E /* XCTest.framework in Frameworks */,
+				A0C602B719CD222900387D3E /* UIKit.framework in Frameworks */,
+				A0C602B619CD222900387D3E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A0C6028619CD222900387D3E = {
+			isa = PBXGroup;
+			children = (
+				A0C6029819CD222900387D3E /* Thelo */,
+				A0C602BA19CD222900387D3E /* TheloTests */,
+				A0C6029119CD222900387D3E /* Frameworks */,
+				A0C6029019CD222900387D3E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A0C6029019CD222900387D3E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A0C6028F19CD222900387D3E /* Thelo.app */,
+				A0C602B319CD222900387D3E /* TheloTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A0C6029119CD222900387D3E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A0C6029219CD222900387D3E /* Foundation.framework */,
+				A0C6029419CD222900387D3E /* CoreGraphics.framework */,
+				A0C6029619CD222900387D3E /* UIKit.framework */,
+				A0C602B419CD222900387D3E /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A0C6029819CD222900387D3E /* Thelo */ = {
+			isa = PBXGroup;
+			children = (
+				A0C602A119CD222900387D3E /* AppDelegate.h */,
+				A0C602A219CD222900387D3E /* AppDelegate.m */,
+				A0C602A419CD222900387D3E /* Main_iPhone.storyboard */,
+				A0C602A719CD222900387D3E /* Main_iPad.storyboard */,
+				A0C602AA19CD222900387D3E /* ViewController.h */,
+				A0C602AB19CD222900387D3E /* ViewController.m */,
+				A0C602AD19CD222900387D3E /* Images.xcassets */,
+				A0C6029919CD222900387D3E /* Supporting Files */,
+			);
+			path = Thelo;
+			sourceTree = "<group>";
+		};
+		A0C6029919CD222900387D3E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A0C6029A19CD222900387D3E /* Thelo-Info.plist */,
+				A0C6029B19CD222900387D3E /* InfoPlist.strings */,
+				A0C6029E19CD222900387D3E /* main.m */,
+				A0C602A019CD222900387D3E /* Thelo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A0C602BA19CD222900387D3E /* TheloTests */ = {
+			isa = PBXGroup;
+			children = (
+				A0C602C019CD222900387D3E /* TheloTests.m */,
+				A0C602BB19CD222900387D3E /* Supporting Files */,
+			);
+			path = TheloTests;
+			sourceTree = "<group>";
+		};
+		A0C602BB19CD222900387D3E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A0C602BC19CD222900387D3E /* TheloTests-Info.plist */,
+				A0C602BD19CD222900387D3E /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A0C6028E19CD222900387D3E /* Thelo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0C602C419CD222900387D3E /* Build configuration list for PBXNativeTarget "Thelo" */;
+			buildPhases = (
+				A0C6028B19CD222900387D3E /* Sources */,
+				A0C6028C19CD222900387D3E /* Frameworks */,
+				A0C6028D19CD222900387D3E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Thelo;
+			productName = Thelo;
+			productReference = A0C6028F19CD222900387D3E /* Thelo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A0C602B219CD222900387D3E /* TheloTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0C602C719CD222900387D3E /* Build configuration list for PBXNativeTarget "TheloTests" */;
+			buildPhases = (
+				A0C602AF19CD222900387D3E /* Sources */,
+				A0C602B019CD222900387D3E /* Frameworks */,
+				A0C602B119CD222900387D3E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A0C602B919CD222900387D3E /* PBXTargetDependency */,
+			);
+			name = TheloTests;
+			productName = TheloTests;
+			productReference = A0C602B319CD222900387D3E /* TheloTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A0C6028719CD222900387D3E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Alex Stelea";
+				TargetAttributes = {
+					A0C602B219CD222900387D3E = {
+						TestTargetID = A0C6028E19CD222900387D3E;
+					};
+				};
+			};
+			buildConfigurationList = A0C6028A19CD222900387D3E /* Build configuration list for PBXProject "Thelo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A0C6028619CD222900387D3E;
+			productRefGroup = A0C6029019CD222900387D3E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A0C6028E19CD222900387D3E /* Thelo */,
+				A0C602B219CD222900387D3E /* TheloTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A0C6028D19CD222900387D3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0C602A919CD222900387D3E /* Main_iPad.storyboard in Resources */,
+				A0C602AE19CD222900387D3E /* Images.xcassets in Resources */,
+				A0C602A619CD222900387D3E /* Main_iPhone.storyboard in Resources */,
+				A0C6029D19CD222900387D3E /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0C602B119CD222900387D3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0C602BF19CD222900387D3E /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A0C6028B19CD222900387D3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0C602AC19CD222900387D3E /* ViewController.m in Sources */,
+				A0C602A319CD222900387D3E /* AppDelegate.m in Sources */,
+				A0C6029F19CD222900387D3E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0C602AF19CD222900387D3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0C602C119CD222900387D3E /* TheloTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A0C602B919CD222900387D3E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0C6028E19CD222900387D3E /* Thelo */;
+			targetProxy = A0C602B819CD222900387D3E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A0C6029B19CD222900387D3E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0C6029C19CD222900387D3E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A0C602A419CD222900387D3E /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0C602A519CD222900387D3E /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		A0C602A719CD222900387D3E /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0C602A819CD222900387D3E /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		A0C602BD19CD222900387D3E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0C602BE19CD222900387D3E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A0C602C219CD222900387D3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A0C602C319CD222900387D3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A0C602C519CD222900387D3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Thelo/Thelo-Prefix.pch";
+				INFOPLIST_FILE = "Thelo/Thelo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A0C602C619CD222900387D3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Thelo/Thelo-Prefix.pch";
+				INFOPLIST_FILE = "Thelo/Thelo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A0C602C819CD222900387D3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Thelo.app/Thelo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Thelo/Thelo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "TheloTests/TheloTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		A0C602C919CD222900387D3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Thelo.app/Thelo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Thelo/Thelo-Prefix.pch";
+				INFOPLIST_FILE = "TheloTests/TheloTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A0C6028A19CD222900387D3E /* Build configuration list for PBXProject "Thelo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0C602C219CD222900387D3E /* Debug */,
+				A0C602C319CD222900387D3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0C602C419CD222900387D3E /* Build configuration list for PBXNativeTarget "Thelo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0C602C519CD222900387D3E /* Debug */,
+				A0C602C619CD222900387D3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A0C602C719CD222900387D3E /* Build configuration list for PBXNativeTarget "TheloTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0C602C819CD222900387D3E /* Debug */,
+				A0C602C919CD222900387D3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A0C6028719CD222900387D3E /* Project object */;
+}
