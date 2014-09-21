@@ -61,6 +61,25 @@
     [_mapItem openInMapsWithLaunchOptions:nil];
 }
 
+- (IBAction)shareButtonPressed:(id)sender {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setDateFormat:@"hh:mma"];
+    NSString *urlString = [NSString stringWithFormat:@"http://maps.google.com/maps?q=%f,%f",
+                           self.event.coordinates.latitude,
+                           self.event.coordinates.longitude];
+    NSString *shareMessage = [NSString stringWithFormat:@"Yo! There's %@ at (%f,%f) between %@ and %@! Be there, or b^2. %@ #BAWK",
+                              self.event.title,
+                              self.event.coordinates.latitude,
+                              self.event.coordinates.longitude,
+                              [formatter stringFromDate:self.event.startTime],
+                              [formatter stringFromDate:self.event.endTime],
+                              urlString];
+    
+    UIActivityViewController *shareView = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:nil];
+    [self presentViewController:shareView animated:YES completion:nil];
+}
+
 - (void) getWalkingDirections {
     MKDirectionsRequest *walkingRouteRequest = [[MKDirectionsRequest alloc] init];
     walkingRouteRequest.transportType = MKDirectionsTransportTypeWalking;
