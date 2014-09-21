@@ -67,7 +67,7 @@
     NSDictionary *dictionary = @{@"channelName":channel.name,
                                  @"lat":[NSNumber numberWithDouble:lat],
                                  @"lng":[NSNumber numberWithDouble:lng],
-                                 @"range":[NSNumber numberWithInt:5000]};
+                                 @"range":[NSNumber numberWithInt:10000]};
     NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];

@@ -9,6 +9,8 @@
 #import "AddEventViewController.h"
 #import <MapKit/MapKit.h>
 #import "DraggablePin.h"
+#import "Channel.h"
+#import "Event.h"
 
 @interface AddEventViewController () <UIPickerViewDataSource, UIPickerViewDelegate, MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UIPickerView *channelPickerView;
@@ -17,7 +19,10 @@
 @property (strong, nonatomic)          NSArray *channelsArray;
 @property (weak, nonatomic) IBOutlet UIButton *currentLocationButton;
 @property (weak, nonatomic) IBOutlet UILabel *addressText;
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
+@property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
 @property (nonatomic) BOOL pinAdded;
+@property (strong, nonatomic) DraggablePin *pin;
 @end
 
 
@@ -38,8 +43,10 @@
     region.center = [[LocationManager currentLocation] coordinate];
     [self.mapView setRegion:region animated:YES];
 
-    
-    self.channelsArray  = [[NSArray alloc]         initWithObjects:@"Channel 1",@"Channel 2",@"Channel 3",@"Channel 4",@"Channel 5",@"Channel 6" , nil];
+    [APIHandler getChannelsWithSuccessHandler:^(NSArray *channels) {
+        self.channelsArray = channels;
+        [self.channelPickerView reloadAllComponents];
+    } failureHandler:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,6 +71,7 @@
 - (IBAction)findCurrentUserLocation:(id)sender {
     CLLocationCoordinate2D coords = [[LocationManager currentLocation] coordinate];
     DraggablePin *annotation = [[DraggablePin alloc]initWithCoordinate:coords];
+    self.pin = annotation;
     if (!self.pinAdded) {
         [self.mapView addAnnotation:annotation];
         [self.mapView setCenterCoordinate:coords animated:NO];
@@ -116,10 +124,34 @@ didChangeDragState:(MKAnnotationViewDragState)newState
 }
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row   forComponent:(NSInteger)component
 {
-    
-    return [self.channelsArray objectAtIndex:row];
-    
+    Channel *channel = [self.channelsArray objectAtIndex:row];
+    return channel.name;
 }
+
+- (IBAction)addButtonPressed:(id)sender {
+    if ([self _validateFields]) {
+        Event *newEvent = [Event new];
+        Channel *channel = [self.channelsArray objectAtIndex:[self.channelPickerView selectedRowInComponent:0]];
+        newEvent.title = self.titleTextField.text;
+        newEvent.eventDescription = self.descriptionTextField.text;
+        newEvent.coordinates = self.pin.coordinate;
+        newEvent.startTime = [NSDate date];
+        newEvent.endTime = [NSDate dateWithTimeIntervalSinceNow:(3*60*60)];
+        [APIHandler createEvent:newEvent inChannel:channel withSuccessHandler:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } failureHandler:^(NSError *error) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!"
+                                                                           message:error.localizedDescription
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"Got it" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }]];
+            [self presentViewController:alert animated:YES completion:nil];
+        }];
+        
+    }
+}
+
 
 - (IBAction)dismissModalViewController:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -128,14 +160,17 @@ didChangeDragState:(MKAnnotationViewDragState)newState
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
-    
 }
 
 // returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent: (NSInteger)component
 {
-    return 6;
+    return [self.channelsArray count];
     
+}
+
+- (BOOL)_validateFields {
+    return ([self.titleTextField.text length] && [self.descriptionTextField.text length] && self.pinAdded);
 }
 /*
 #pragma mark - Navigation
