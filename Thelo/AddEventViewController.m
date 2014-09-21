@@ -43,7 +43,7 @@
     region.span = span;
     region.center = [[LocationManager currentLocation] coordinate];
     [self.mapView setRegion:region animated:YES];
-
+    [self findCurrentUserLocation:self];
     [APIHandler getChannelsWithSuccessHandler:^(NSArray *channels) {
         self.channelsArray = channels;
         [self.channelPickerView reloadAllComponents];

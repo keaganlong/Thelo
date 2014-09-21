@@ -11,13 +11,6 @@
 @implementation DraggablePin
 @synthesize coordinate;
 
-- (NSString *)subtitle{
-    return nil;
-}
-
-- (NSString *)title{
-    return nil;
-}
 
 -(id)initWithCoordinate:(CLLocationCoordinate2D)coord {
     coordinate=coord;
