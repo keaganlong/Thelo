@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet MKRoute *walkingRoute;
-
+@property (nonatomic) MKPointAnnotation *annotation;
 @property (nonatomic) IBOutlet MKMapItem *mapItem;
 @end
 
@@ -67,8 +67,10 @@
     MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:[[LocationManager currentLocation] coordinate] addressDictionary:nil];
     [walkingRouteRequest setSource:[[MKMapItem alloc] initWithPlacemark:placemark]];
     placemark = [[MKPlacemark alloc] initWithCoordinate:self.event.coordinates addressDictionary:nil];
-    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    [annotation setCoordinate:self.event.coordinates];
+    self.annotation = [[MKPointAnnotation alloc] init];
+    [self.annotation setCoordinate:self.event.coordinates];
+    [self.annotation setTitle:self.event.title];
+    [self.mapView addAnnotation:self.annotation];
     [walkingRouteRequest setDestination :[[MKMapItem alloc] initWithPlacemark:placemark]];
     
     MKDirections *walkingRouteDirections = [[MKDirections alloc] initWithRequest:walkingRouteRequest];
@@ -78,10 +80,9 @@
         } else {
             // The code doesn't request alternate routes, so add the single calculated route to
             // a previously declared MKRoute property called walkingRoute.
-//            NSLog(@"%lu", (unsigned long)[walkingRouteResponse.routes count]);
             
             dispatch_async(dispatch_get_main_queue(), ^(){
-                [self.mapView addAnnotation:annotation];
+                [self.mapView addAnnotation:self.annotation];
 
                 for (MKRoute *route in walkingRouteResponse.routes)
                 {
@@ -94,7 +95,20 @@
                 }
             });
 
+            MKCoordinateSpan locationSpan;
             
+            float maxLat = MAX(self.event.coordinates.latitude, [[LocationManager currentLocation] coordinate].latitude);
+            float maxLong = MAX(self.event.coordinates.longitude, [[LocationManager currentLocation] coordinate].longitude);
+            float minLat = MIN(self.event.coordinates.latitude, [[LocationManager currentLocation] coordinate].latitude);
+            float minLong = MIN(self.event.coordinates.longitude, [[LocationManager currentLocation] coordinate].longitude);
+            
+            locationSpan.latitudeDelta = (maxLat - minLat) * 1.5;
+            locationSpan.longitudeDelta = (maxLong - minLong) * 1.5;
+            CLLocationCoordinate2D center = CLLocationCoordinate2DMake((maxLat + minLat) * 0.5, (maxLong + minLong) * 0.5);
+
+            [self.mapView setRegion:MKCoordinateRegionMake(center, locationSpan)];
+            
+
             
         }
     }];
