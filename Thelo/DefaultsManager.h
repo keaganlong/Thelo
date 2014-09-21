@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Channel.h"
+#import "Event.h"
 
 #define DEVICE_ID [[[UIDevice currentDevice] identifierForVendor] UUIDString]
 
@@ -15,5 +16,9 @@
 
 + (NSInteger)notificationRadiusForChannel:(Channel *)channel;
 + (void)setNotificationRadius:(NSInteger)radius forChannel:(Channel *)channel;
++ (void)setIntentToAttendEvent:(Event *)event;
++ (BOOL)intentToAttendEvent:(Event *)event;
++ (void)setAttendanceOfEvent:(Event *)event;
++ (BOOL)attendanceOfEvent:(Event *)event;
 
 @end

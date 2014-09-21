@@ -24,4 +24,30 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++ (void)setIntentToAttendEvent:(Event *)event {
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"event_intents"];
+    NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
+    newDict[event.eventID] = [NSNumber numberWithBool:YES];
+    [[NSUserDefaults standardUserDefaults] setObject:newDict forKey:@"event_intents"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (BOOL)intentToAttendEvent:(Event *)event {
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"event_intents"];
+    return ([dict objectForKey:event.eventID] != nil);
+}
+
++ (void)setAttendanceOfEvent:(Event *)event {
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"event_attend"];
+    NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
+    newDict[event.eventID] = [NSNumber numberWithBool:YES];
+    [[NSUserDefaults standardUserDefaults] setObject:newDict forKey:@"event_attend"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (BOOL)attendanceOfEvent:(Event *)event {
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"event_attend"];
+    return ([dict objectForKey:event.eventID] != nil);
+}
+
 @end

@@ -270,6 +270,7 @@
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"POST response %@ %@", responseObject, [url absoluteString]);
         [self _onMainQueue:^{
+            [DefaultsManager setIntentToAttendEvent:event];
             if (success) {
                 success();
             }
@@ -295,6 +296,7 @@
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"POST response %@ %@", responseObject, [url absoluteString]);
         [self _onMainQueue:^{
+            [DefaultsManager setAttendanceOfEvent:event];
             if (success) {
                 success();
             }

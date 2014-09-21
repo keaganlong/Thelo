@@ -75,7 +75,14 @@
         }
     }
     if (firingEvent) {
-        [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"You're within %1.0fm of %@!", circRegion.radius, eventName] forEvent:firingEvent];
+        if ([DefaultsManager intentToAttendEvent:firingEvent]) {
+            if (![DefaultsManager attendanceOfEvent:firingEvent]) {
+                [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"Arrived at %@", eventName] forEvent:firingEvent];
+                [APIHandler setAttendanceOfEvent:firingEvent withSuccessHandler:nil failureHandler:nil];
+            }
+        } else {
+            [NotificationManager fireActionableLocalNotificationWithMessage:[NSString stringWithFormat:@"%@ within %1.0fm", eventName, circRegion.radius] forEvent:firingEvent];
+        }
     }
 }
 
@@ -120,9 +127,10 @@
                 }
                 [LocationManager clearRegisterRegions];
                 for (Event *event in self.events) {
+                    double radius = [DefaultsManager intentToAttendEvent:event] ? 50.0 : channel.notificationRadius;
                     [LocationManager registerRegionAtLatitude:event.coordinates.latitude
                                                     longitude:event.coordinates.longitude
-                                                   withRadius:channel.notificationRadius
+                                                   withRadius:radius
                                                 andIdentifier:[NSString stringWithFormat:@"%@#0#%@", event.title, event.eventID]];
                 }
             } failureHandler:nil];

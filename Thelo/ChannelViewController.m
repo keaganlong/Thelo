@@ -80,7 +80,9 @@
         self.notificationText.text = @"Subscribed!";
         self.channel.subscribed = YES;
         [self.subscribedSwitch setOn:self.channel.subscribed];
-        [APIHandler subscribeToChannel:self.channel withSuccessHandler:nil failureHandler:nil];
+        [APIHandler subscribeToChannel:self.channel withSuccessHandler:^{
+            [LocationManager forceMonitoredRegionsUpdate];
+        } failureHandler:nil];
     }
     else {
         self.channel.subscribed = NO;

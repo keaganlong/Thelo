@@ -10,12 +10,19 @@
 
 @implementation NotificationManager
 
-+ (void)fireLocalNotificationWithMessage:(NSString *)message forEvent:(Event *)event {
++ (void)fireActionableLocalNotificationWithMessage:(NSString *)message forEvent:(Event *)event {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.fireDate = [[NSDate alloc] init];
     notification.alertBody = message;
     notification.category = @"intentCategory";
     notification.userInfo = @{@"event":event.eventID};
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+}
+
++ (void)fireLocalNotificationWithMessage:(NSString *)message forEvent:(Event *)event {
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.fireDate = [[NSDate alloc] init];
+    notification.alertBody = message;
     [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 

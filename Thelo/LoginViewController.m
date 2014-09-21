@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [LocationManager forceMonitoredRegionsUpdate];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
