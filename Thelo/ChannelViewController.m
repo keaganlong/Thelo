@@ -61,6 +61,14 @@
     [APIHandler getEventsForChannel:self.channel withSuccessHandler:^(NSArray *events) {
         self.events = events;
         [self.channelTable reloadData];
+        for (Event *event in events) {
+            [APIHandler getIntentToAttendCountForEvent:event withSuccessHandler:^(NSNumber *count) {
+                [APIHandler getAttendCountForEvent:event withSuccessHandler:^(NSNumber *attendCount) {
+                    event.goingCount = [NSNumber numberWithInt:([count intValue] + [attendCount intValue])];
+                    [self.channelTable reloadData];
+                } failureHandler:nil];
+            } failureHandler:nil];
+        }
     } failureHandler:nil];
 
     [self _selectSegmentedControlSegment];
@@ -71,6 +79,14 @@
     [APIHandler getEventsForChannel:self.channel withSuccessHandler:^(NSArray *events) {
         self.events = events;
         [self.channelTable reloadData];
+        for (Event *event in events) {
+            [APIHandler getIntentToAttendCountForEvent:event withSuccessHandler:^(NSNumber *count) {
+                [APIHandler getAttendCountForEvent:event withSuccessHandler:^(NSNumber *attendCount) {
+                    event.goingCount = [NSNumber numberWithInt:([count intValue] + [attendCount intValue])];
+                    [self.channelTable reloadData];
+                } failureHandler:nil];
+            } failureHandler:nil];
+        }
     } failureHandler:nil];
 }
 
@@ -179,7 +195,7 @@
 
     UILabel *peopleGoingText = (UILabel *)[cell viewWithTag:102];
 
-    peopleGoingText.text = @"5";
+    peopleGoingText.text = [event.goingCount stringValue];
     return cell;
 }
 
