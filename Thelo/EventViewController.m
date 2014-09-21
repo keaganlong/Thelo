@@ -8,6 +8,9 @@
 
 #import "EventViewController.h"
 #import <MapKit/MapKit.h>
+#import "FUISwitch.h"
+#import "UIColor+FlatUI.h"
+#import "UIFont+FlatUI.h"
 
 @interface EventViewController () <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -16,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet MKRoute *walkingRoute;
 @property (nonatomic) MKPointAnnotation *annotation;
 @property (nonatomic) IBOutlet MKMapItem *mapItem;
+@property (weak, nonatomic) IBOutlet UITextView *detailViewText;
+@property (weak, nonatomic) IBOutlet FUISwitch *attendingSwitch;
 @end
 
 
@@ -29,7 +34,19 @@
     [formatter setTimeStyle:NSDateFormatterNoStyle];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setLocale:[NSLocale currentLocale]];
+    UIFont *myFont = [UIFont flatFontOfSize:36];
+    self.titleLabel.font = myFont;
     self.timeLabel.text = [self _dateDiff:self.event.startTime];
+    _attendingSwitch.onColor = [UIColor turquoiseColor];
+    _attendingSwitch.offColor = [UIColor cloudsColor];
+    _attendingSwitch.onLabel.text = @"Going";
+    _attendingSwitch.offLabel.text = @"Not Going";
+    _attendingSwitch.on = NO;
+
+    _attendingSwitch.onBackgroundColor = [UIColor midnightBlueColor];
+    _attendingSwitch.offBackgroundColor = [UIColor silverColor];
+    _attendingSwitch.offLabel.font = [UIFont boldFlatFontOfSize:14];
+    _attendingSwitch.onLabel.font = [UIFont boldFlatFontOfSize:14];
 
     self.mapView.delegate = self;
     [self getWalkingDirections];
@@ -126,7 +143,8 @@
             CLLocationCoordinate2D center = CLLocationCoordinate2DMake((maxLat + minLat) * 0.5, (maxLong + minLong) * 0.5);
 
             [self.mapView setRegion:MKCoordinateRegionMake(center, locationSpan)];
-            
+                        
+            self.detailViewText.text = self.event.eventDescription;
 
             
         }

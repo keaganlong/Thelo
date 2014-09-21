@@ -33,19 +33,20 @@
 @property (strong, nonatomic) NSArray *events;
 @end
 
+
 @implementation ChannelViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.channelLabel.text = self.channel.name;
-    _notificationRadiusControl.selectedFont = [UIFont boldFlatFontOfSize:12];
+    _notificationRadiusControl.selectedFont = [UIFont boldFlatFontOfSize:10];
     _notificationRadiusControl.selectedFontColor = [UIColor cloudsColor];
-    _notificationRadiusControl.deselectedFont = [UIFont flatFontOfSize:12];
+    _notificationRadiusControl.deselectedFont = [UIFont flatFontOfSize:10];
     _notificationRadiusControl.deselectedFontColor = [UIColor cloudsColor];
     _notificationRadiusControl.selectedColor = [UIColor midnightBlueColor];
     _notificationRadiusControl.deselectedColor = [UIColor silverColor];
     _notificationRadiusControl.dividerColor = [UIColor midnightBlueColor];
-    _notificationRadiusControl.cornerRadius = 12.0;
+    _notificationRadiusControl.cornerRadius = 9.0;
     _subscribedSwitch.onColor = [UIColor turquoiseColor];
     _subscribedSwitch.offColor = [UIColor cloudsColor];
     _subscribedSwitch.onBackgroundColor = [UIColor midnightBlueColor];
@@ -165,10 +166,20 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"general-event"];
  
     Event *event = [self.events objectAtIndex:indexPath.row];
-    cell.textLabel.text = event.title;
+    
+    UILabel *titleLabel = (UILabel *)[cell viewWithTag:100];
+    titleLabel.text = event.title;
+    UILabel *descriptionLabel = (UILabel *)[cell viewWithTag:101];
+    descriptionLabel.text = [self _dateDiff:event.startTime];
+
+
+    UILabel *peopleGoingText = (UILabel *)[cell viewWithTag:102];
+
+    peopleGoingText.text = @"5";
     return cell;
 }
 
@@ -181,6 +192,29 @@
             NSIndexPath *indexPath = [self.channelTable indexPathForCell:cell];
             evc.event = [self.events objectAtIndex:indexPath.row];
         }
+    }
+}
+
+#pragma mark - Private methods
+- (NSString *)_dateDiff:(NSDate *)date {
+    NSDate *todayDate = [NSDate date];
+    double ti = [date timeIntervalSinceDate:todayDate];
+    ti = ti * -1;
+    if(ti < 1) {
+        return @"never";
+    } else 	if (ti < 60) {
+        return @"less than a minute ago";
+    } else if (ti < 3600) {
+        int diff = round(ti / 60);
+        return [NSString stringWithFormat:@"%d minutes ago", diff];
+    } else if (ti < 86400) {
+        int diff = round(ti / 60 / 60);
+        return[NSString stringWithFormat:@"%d hours ago", diff];
+    } else if (ti < 2629743) {
+        int diff = round(ti / 60 / 60 / 24);
+        return[NSString stringWithFormat:@"%d days ago", diff];
+    } else {
+        return @"never";
     }
 }
 

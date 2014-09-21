@@ -63,6 +63,7 @@
 		A0E35B4D19CEA2A2006FE8AE /* UITabBar+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E35B3819CEA2A2006FE8AE /* UITabBar+FlatUI.m */; };
 		A0E35B4E19CEA2A2006FE8AE /* UITableViewCell+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E35B3A19CEA2A2006FE8AE /* UITableViewCell+FlatUI.m */; };
 		A0E35B4F19CEA2A2006FE8AE /* UIToolbar+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E35B3C19CEA2A2006FE8AE /* UIToolbar+FlatUI.m */; };
+		A0E5465619CED56C003D1C53 /* glyphicons_024_parents.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E5465519CED56C003D1C53 /* glyphicons_024_parents.png */; };
 		F78BE570E5434E1FAE06713E /* libPods-Thelo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 856CEF5C5BFE4F1D936BDB1A /* libPods-Thelo.a */; };
 /* End PBXBuildFile section */
 
@@ -172,6 +173,7 @@
 		A0E35B3A19CEA2A2006FE8AE /* UITableViewCell+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+FlatUI.m"; sourceTree = "<group>"; };
 		A0E35B3B19CEA2A2006FE8AE /* UIToolbar+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+FlatUI.h"; sourceTree = "<group>"; };
 		A0E35B3C19CEA2A2006FE8AE /* UIToolbar+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+FlatUI.m"; sourceTree = "<group>"; };
+		A0E5465519CED56C003D1C53 /* glyphicons_024_parents.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glyphicons_024_parents.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,6 +297,7 @@
 				A0C602A219CD222900387D3E /* AppDelegate.m */,
 				A0E35B0D19CE9374006FE8AE /* glyphicons_198_ok.png */,
 				A0E35B1119CE9AC4006FE8AE /* glyphicons_060_compass.png */,
+				A0E5465519CED56C003D1C53 /* glyphicons_024_parents.png */,
 				A0E35B0E19CE9374006FE8AE /* glyphicons_199_ban.png */,
 				A0C602A419CD222900387D3E /* Main_iPhone.storyboard */,
 				A0C602A719CD222900387D3E /* Main_iPad.storyboard */,
@@ -467,6 +470,7 @@
 			files = (
 				A0E35B1019CE9374006FE8AE /* glyphicons_199_ban.png in Resources */,
 				A0E35B1219CE9AC4006FE8AE /* glyphicons_060_compass.png in Resources */,
+				A0E5465619CED56C003D1C53 /* glyphicons_024_parents.png in Resources */,
 				A0C602A919CD222900387D3E /* Main_iPad.storyboard in Resources */,
 				A0C602AE19CD222900387D3E /* Images.xcassets in Resources */,
 				A0E35B0F19CE9374006FE8AE /* glyphicons_198_ok.png in Resources */,

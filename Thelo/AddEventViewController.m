@@ -15,6 +15,7 @@
 #import "FUIButton.h"
 #import "UIColor+FlatUI.h"
 #import "UIFont+FlatUI.h"
+#import "FUITextField.h"
 
 @interface AddEventViewController () <UIPickerViewDataSource, UIPickerViewDelegate, MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UIPickerView *channelPickerView;
@@ -23,8 +24,8 @@
 @property (strong, nonatomic)          NSArray *channelsArray;
 @property (weak, nonatomic) IBOutlet UIButton *currentLocationButton;
 @property (weak, nonatomic) IBOutlet UILabel *addressText;
-@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
-@property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
+@property (weak, nonatomic) IBOutlet FUITextField *titleTextField;
+@property (weak, nonatomic) IBOutlet FUITextField *descriptionTextField;
 @property (weak, nonatomic) IBOutlet FUIButton *addEventButton;
 
 @property (nonatomic) BOOL pinAdded;
@@ -46,6 +47,12 @@
     _addEventButton.titleLabel.font = [UIFont boldFlatFontOfSize:16];
     [_addEventButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateNormal];
     [_addEventButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateHighlighted];
+    _titleTextField.backgroundColor = [UIColor greenSeaColor];
+    [_titleTextField setTextColor:[UIColor cloudsColor]];
+
+    _descriptionTextField.backgroundColor = [UIColor greenSeaColor];
+    [_descriptionTextField setTextColor:[UIColor cloudsColor]];
+
     CGRect frameRect = self.descriptionTextField.frame;
     frameRect.size.height = 100.0;
     self.descriptionTextField.frame = frameRect;
