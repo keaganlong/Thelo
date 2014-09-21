@@ -19,6 +19,10 @@
 #define CREATE_CHANNEL_URL @"/channel/addOne"
 #define GET_EVENTS_URL @"/event/getAllEventsWithinRange"
 #define CREATE_EVENT_URL @"/event/addOne"
+#define EVENT_INTENT_URL @"/event/addIntentUser"
+#define EVENT_ATTEND_URL @"/event/addArrivedUser"
+#define EVENT_INTENT_COUNT_URL @"/event/getNumberIntentUsersForEvent"
+#define EVENT_ATTEND_COUNT_URL @"/event/getNumberArrivedUsersForEvent"
 
 @interface APIHandler ()
 @property (strong, nonatomic) APIHandler *instance;
@@ -250,6 +254,106 @@
     [operation start];
 }
 
+- (void)setIntentToAttendEvent:(Event *)event withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, EVENT_INTENT_URL]];
+    NSDictionary *dictionary = @{@"deviceId":DEVICE_ID,
+                                 @"eventId":event.eventID};
+    NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST response %@ %@", responseObject, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (success) {
+                success();
+            }
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"POST failed %@ %@", error.localizedDescription, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (failure) {
+                failure(error);
+            }
+        }];
+    }];
+    [operation start];
+}
+
+- (void)setAttendanceOfEvent:(Event *)event withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, EVENT_ATTEND_URL]];
+    NSDictionary *dictionary = @{@"deviceId":DEVICE_ID,
+                                 @"eventId":event.eventID};
+    NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST response %@ %@", responseObject, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (success) {
+                success();
+            }
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"POST failed %@ %@", error.localizedDescription, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (failure) {
+                failure(error);
+            }
+        }];
+    }];
+    [operation start];
+}
+
+- (void)getIntentToAttendCountForEvent:(Event *)event withSuccessHandler:(void (^)(NSNumber *))success failureHandler:(void (^)(NSError *))failure {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, EVENT_INTENT_COUNT_URL]];
+    NSDictionary *dictionary = @{@"eventId":event.eventID};
+    NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST response %@ %@", responseObject, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (success) {
+                NSDictionary *responseDict = (NSDictionary *)responseObject;
+                success(responseDict[@"count"]);
+            }
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"POST failed %@ %@", error.localizedDescription, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (failure) {
+                failure(error);
+            }
+        }];
+    }];
+    [operation start];
+}
+
+- (void)getAttendCountForEvent:(Event *)event withSuccessHandler:(void (^)(NSNumber *))success failureHandler:(void (^)(NSError *))failure {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, EVENT_ATTEND_COUNT_URL]];
+    NSDictionary *dictionary = @{@"eventId":event.eventID};
+    NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST response %@ %@", responseObject, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (success) {
+                NSDictionary *responseDict = (NSDictionary *)responseObject;
+                success(responseDict[@"count"]);
+            }
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"POST failed %@ %@", error.localizedDescription, [url absoluteString]);
+        [self _onMainQueue:^{
+            if (failure) {
+                failure(error);
+            }
+        }];
+    }];
+    [operation start];
+}
+
 #pragma mark - Static
 + (void)loginWithSuccessHandler:(void (^)())success failureHandler:(void(^)(NSError *))failure {
     [[self instance] loginWithSuccessHandler:success failureHandler:failure];
@@ -277,6 +381,22 @@
 
 + (void)getSubscribedChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void (^)(NSError *))failure {
     [[self instance] getSubscribedChannelsWithSuccessHandler:success failureHandler:failure];
+}
+
++ (void)setIntentToAttendEvent:(Event *)event withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure {
+    [[self instance] setIntentToAttendEvent:event withSuccessHandler:success failureHandler:failure];
+}
+
++ (void)setAttendanceOfEvent:(Event *)event withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure {
+    [[self instance] setAttendanceOfEvent:event withSuccessHandler:success failureHandler:failure];
+}
+
++ (void)getIntentToAttendCountForEvent:(Event *)event withSuccessHandler:(void (^)(NSNumber *))success failureHandler:(void (^)(NSError *))failure {
+    [[self instance] getIntentToAttendCountForEvent:event withSuccessHandler:success failureHandler:failure];
+}
+
++ (void)getAttendCountForEvent:(Event *)event withSuccessHandler:(void (^)(NSNumber *))success failureHandler:(void (^)(NSError *))failure {
+    [[self instance] getAttendCountForEvent:event withSuccessHandler:success failureHandler:failure];
 }
 
 #pragma mark - Private methods

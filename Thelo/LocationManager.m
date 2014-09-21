@@ -64,8 +64,19 @@
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
     CLCircularRegion *circRegion = (CLCircularRegion *)region;
-    NSString *eventName = [circRegion.identifier componentsSeparatedByString:@"#0#"][0];
-    [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"You're within %1.0fm of %@!", circRegion.radius, eventName]];
+    NSArray *components = [circRegion.identifier componentsSeparatedByString:@"#0#"];
+    NSString *eventName = components[0];
+    NSString *eventID = components[1];
+    Event *firingEvent;
+    for (Event *event in self.events) {
+        if ([event.eventID isEqualToString:eventID]) {
+            firingEvent = event;
+            break;
+        }
+    }
+    if (firingEvent) {
+        [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"You're within %1.0fm of %@!", circRegion.radius, eventName] forEvent:firingEvent];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {

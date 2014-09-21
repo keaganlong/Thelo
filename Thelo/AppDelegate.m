@@ -13,7 +13,20 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:nil];
+    UIMutableUserNotificationAction *intentAction = [[UIMutableUserNotificationAction alloc] init];
+    intentAction.identifier = @"intentAction";
+    intentAction.title = @"I'm going!";
+    intentAction.activationMode = UIUserNotificationActivationModeForeground;
+    
+    UIMutableUserNotificationCategory *intentCategory = [[UIMutableUserNotificationCategory alloc] init];
+    [intentCategory setActions:@[intentAction] forContext:UIUserNotificationActionContextDefault];
+    [intentCategory setActions:@[intentAction] forContext:UIUserNotificationActionContextMinimal];
+    intentCategory.identifier = @"intentCategory";
+    
+    NSSet *categories = [NSSet setWithObjects:intentCategory, nil];
+    
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)
+                                                                             categories:categories];
     [application registerUserNotificationSettings:settings];
     return YES;
 }
@@ -44,6 +57,26 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler
+{
+    NSLog(@"AppDelegate - handleActionWithIdentifier: %@", identifier);
+    if ([identifier isEqualToString:@"intentAction"]) {
+        Event *event = [[Event alloc] init];
+        event.eventID = [notification.userInfo objectForKey:@"event"];
+        [APIHandler setIntentToAttendEvent:event withSuccessHandler:nil failureHandler:nil];
+    }
+    //must call completion handler when finished
+    completionHandler();
+}
+//Called for remote notification action events
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler
+{
+    NSLog(@"AppDelegate - handleActionWithIdentifier: %@", identifier);
+    
+    //must call completion handler when finished
+    completionHandler();
 }
 
 @end

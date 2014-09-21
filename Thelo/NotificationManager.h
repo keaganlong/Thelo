@@ -10,6 +10,6 @@
 
 @interface NotificationManager : NSObject
 
-+ (void)fireLocalNotificationWithMessage:(NSString *)message;
++ (void)fireLocalNotificationWithMessage:(NSString *)message forEvent:(Event *)event;
 
 @end

@@ -20,5 +20,10 @@
 + (void)getChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure;
 + (void)getEventsForChannel:(Channel *)channel withSuccessHandler:(void (^)(NSArray *))success failureHandler:(void(^)(NSError *))failure;
 + (void)createEvent:(Event *)event inChannel:(Channel *)channel withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure;
++ (void)setIntentToAttendEvent:(Event *)event withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure;
++ (void)setAttendanceOfEvent:(Event *)event withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure;
++ (void)getIntentToAttendCountForEvent:(Event *)event withSuccessHandler:(void (^)(NSNumber *))success failureHandler:(void (^)(NSError *))failure;
++ (void)getAttendCountForEvent:(Event *)event withSuccessHandler:(void (^)(NSNumber *))success failureHandler:(void (^)(NSError *))failure;
+
 
 @end
