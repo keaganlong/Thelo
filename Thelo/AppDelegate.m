@@ -28,6 +28,11 @@
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)
                                                                              categories:categories];
     [application registerUserNotificationSettings:settings];
+    
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]) {
+        [LocationManager forceCheckOfRegions];
+    }
+    
     return YES;
 }
 							

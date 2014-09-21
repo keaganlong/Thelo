@@ -16,5 +16,6 @@
 + (CLLocation *)currentLocation;
 + (void)forceMonitoredRegionsUpdate;
 + (void)startPeriodicUpdates;
++ (void)forceCheckOfRegions;
 
 @end

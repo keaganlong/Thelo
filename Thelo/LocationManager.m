@@ -128,9 +128,11 @@
         if ([self.lastLocation distanceFromLocation:newLocation] > 1000) {
             [self _populateMonitoredRegions];
             self.lastLocation = newLocation;
+        } else if ([newLocation.timestamp timeIntervalSinceDate:self.lastLocation.timestamp] > 15) {
+            [self _populateMonitoredRegions];
+            self.lastLocation = newLocation;
         }
     } else {
-        [self _populateMonitoredRegions];
         self.lastLocation = newLocation;
     }
 }
@@ -176,7 +178,13 @@
 }
 
 + (void)startPeriodicUpdates {
-    [LocationManager instance].timer = [NSTimer scheduledTimerWithTimeInterval:15 target:[LocationManager instance] selector:@selector(_populateMonitoredRegions) userInfo:nil repeats:YES];
+    //[LocationManager instance].timer = [NSTimer scheduledTimerWithTimeInterval:15 target:[LocationManager instance] selector:@selector(_populateMonitoredRegions) userInfo:nil repeats:YES];
+}
+
++ (void)forceCheckOfRegions {
+    for (CLCircularRegion *region in [[LocationManager manager] monitoredRegions]) {
+        [[LocationManager manager] requestStateForRegion:region];
+    }
 }
 
 #pragma mark - Singleton
