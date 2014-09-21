@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *channelTable;
 @property (weak, nonatomic) IBOutlet UILabel *radius;
 @property (weak, nonatomic) IBOutlet UIButton *subscribedButton;
-@property (nonatomic) BOOL subscribed;
 @property (strong, nonatomic) NSArray *events;
 @end
 
@@ -34,6 +33,7 @@
         self.events = events;
         [self.channelTable reloadData];
     } failureHandler:nil];
+    [self.subscribedButton setTitle:(self.channel.subscribed ? @"Subscribed √" : @"Not Subscribed") forState: UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -45,14 +45,15 @@
 }
 
 - (IBAction)subscribeChange:(id)sender {
-    if (!self.subscribed) {
-        [self.subscribedButton setTitle: @"Not Subscribed" forState: UIControlStateNormal];
-        self.subscribed = YES;
+    if (!self.channel.subscribed) {
+        [self.subscribedButton setTitle: @"Subscribed √" forState: UIControlStateNormal];
+        self.channel.subscribed = YES;
+        [APIHandler subscribeToChannel:self.channel withSuccessHandler:nil failureHandler:nil];
     }
     else {
-        [self.subscribedButton setTitle: @"Subscribed √" forState: UIControlStateNormal];
-        self.subscribed = NO;
-
+        [self.subscribedButton setTitle: @"Not Subscribed" forState: UIControlStateNormal];
+        self.channel.subscribed = NO;
+        [APIHandler unsubscribeFromChannel:self.channel withSuccessHandler:nil failureHandler:nil];
     }
 }
 

@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSArray *events;
+@property (nonatomic) BOOL subscribed;
 @property (nonatomic) NSInteger *notificationRadius;
 
 @end

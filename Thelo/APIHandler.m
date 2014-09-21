@@ -14,6 +14,7 @@
 #define BASE_API_URL @"http://vast-badlands-7635.herokuapp.com"
 #define LOGIN_USER_URL @"/user/addOne"
 #define SUB_UNSUB_CHANNEL_URL @"/user/updateUserChannels"
+#define GET_SUBBED_CHANNELS_URL @"/user/getSubscribedChannels"
 #define GET_CHANNELS_URL @"/channel/getAll"
 #define CREATE_CHANNEL_URL @"/channel/addOne"
 #define GET_EVENTS_URL @"/event/getAllEventsWithinRange"
@@ -26,30 +27,64 @@
 @implementation APIHandler
 #pragma mark - Instance
 - (void)loginWithSuccessHandler:(void (^)())success failureHandler:(void(^)(NSError *))failure {
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, LOGIN_USER_URL]];
-//    NSDictionary *dictionary = @{@"deviceId":DEVICE_ID};
-//    NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
-//    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//    operation.responseSerializer = [AFJSONResponseSerializer serializer];
-//    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"POST response %@ %@", responseObject, [[request URL] absoluteString]);
-//        [self _onMainQueue:^{
-//            if (success) {
-//                success();
-//            }
-//        }];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"POST failed %@ %@", error.localizedDescription, [[request URL] absoluteString]);
-//        [self _onMainQueue:^{
-//            if (failure) {
-//                failure(error);
-//            }
-//        }];
-//    }];
-//    [operation start];
-    if (success) {
-        success();
-    }
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, LOGIN_USER_URL]];
+    NSDictionary *dictionary = @{@"deviceId":DEVICE_ID};
+    NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST response %@ %@", responseObject, [[request URL] absoluteString]);
+        [self _onMainQueue:^{
+            if (success) {
+                success();
+            }
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"POST failed %@ %@", error.localizedDescription, [[request URL] absoluteString]);
+        [self _onMainQueue:^{
+            if (failure) {
+                failure(error);
+            }
+        }];
+    }];
+    [operation start];
+}
+
+- (void)getSubscribedChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void (^)(NSError *))failure {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, GET_SUBBED_CHANNELS_URL]];
+    NSDictionary *dictionary = @{@"deviceId":DEVICE_ID};
+    NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST response %@ %@", responseObject, [[request URL] absoluteString]);
+        [self _onMainQueue:^{
+            if (success) {
+                if (success) {
+                    NSDictionary *responseDict = (NSDictionary *)responseObject;
+                    NSMutableArray *channels = [[NSMutableArray alloc] init];
+                    for (NSDictionary *channel in responseDict[@"channels"]) {
+                        if (channel[@"name"]) {
+                            Channel *newChannel = [Channel new];
+                            newChannel.name = channel[@"name"];
+                            newChannel.subscribed = YES;
+                            [channels addObject:newChannel];
+                        }
+                    }
+                    success(channels);
+                }
+
+            }
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"POST failed %@ %@", error.localizedDescription, [[request URL] absoluteString]);
+        [self _onMainQueue:^{
+            if (failure) {
+                failure(error);
+            }
+        }];
+    }];
+    [operation start];
 }
 
 - (void)subscribeToChannel:(Channel *)channel withSuccessHandler:(void (^)())success failureHandler:(void(^)(NSError *))failure{
@@ -119,6 +154,7 @@
                     if (channel[@"name"]) {
                         Channel *newChannel = [Channel new];
                         newChannel.name = channel[@"name"];
+                        newChannel.subscribed = NO;
                         [channels addObject:newChannel];
                     }
                 }
@@ -234,6 +270,10 @@
 
 + (void)unsubscribeFromChannel:(Channel *)channel withSuccessHandler:(void (^)())success failureHandler:(void(^)(NSError *))failure{
     [[self instance] unsubscribeFromChannel:channel withSuccessHandler:success failureHandler:failure];
+}
+
++ (void)getSubscribedChannelsWithSuccessHandler:(void (^)(NSArray *))success failureHandler:(void (^)(NSError *))failure {
+    [[self instance] getSubscribedChannelsWithSuccessHandler:success failureHandler:failure];
 }
 
 #pragma mark - Private methods

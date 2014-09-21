@@ -12,7 +12,8 @@
 
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *channelTable;
-@property (strong, nonatomic) NSArray *channels;
+@property (strong, nonatomic) NSArray *unsubbedChannels;
+@property (strong, nonatomic) NSArray *subbedChannels;
 @end
 
 
@@ -27,15 +28,45 @@
     NSLog(@"Currently at: %@", [LocationManager currentLocation]);
     [LocationManager registerRegionAtLatitude:33.777229 longitude:-84.396247 withRadius:300.0 andIdentifier:@"Klaus"];
     [APIHandler getChannelsWithSuccessHandler:^(NSArray *newChannels) {
-        self.channels = newChannels;
-        [self.channelTable reloadData];
+        [APIHandler getSubscribedChannelsWithSuccessHandler:^(NSArray *subbedChannels) {
+            NSMutableArray *unsubbedChannels = [NSMutableArray new];
+            for (Channel *unsubbedChannel in newChannels) {
+                BOOL matched = NO;
+                for (Channel *subbedChannel in subbedChannels) {
+                    if ([subbedChannel.name isEqualToString:unsubbedChannel.name]) {
+                        matched = YES;
+                    }
+                }
+                if (!matched) {
+                    [unsubbedChannels addObject:unsubbedChannel];
+                }
+            }
+            self.unsubbedChannels = unsubbedChannels;
+            self.subbedChannels = subbedChannels;
+            [self.channelTable reloadData];
+        } failureHandler:nil];
     } failureHandler:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [APIHandler getChannelsWithSuccessHandler:^(NSArray *newChannels) {
-        self.channels = newChannels;
-        [self.channelTable reloadData];
+        [APIHandler getSubscribedChannelsWithSuccessHandler:^(NSArray *subbedChannels) {
+            NSMutableArray *unsubbedChannels = [NSMutableArray new];
+            for (Channel *unsubbedChannel in newChannels) {
+                BOOL matched = NO;
+                for (Channel *subbedChannel in subbedChannels) {
+                    if ([subbedChannel.name isEqualToString:unsubbedChannel.name]) {
+                        matched = YES;
+                    }
+                }
+                if (!matched) {
+                    [unsubbedChannels addObject:unsubbedChannel];
+                }
+            }
+            self.unsubbedChannels = unsubbedChannels;
+            self.subbedChannels = subbedChannels;
+            [self.channelTable reloadData];
+        } failureHandler:nil];
     } failureHandler:nil];
 
 }
@@ -45,18 +76,35 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"Subscribed channels";
+    } else {
+        return @"Other channels";
+    }
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.channels count];
+    if (section == 0) {
+        return [self.subbedChannels count];
+    } else {
+        return [self.unsubbedChannels count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"general"];
-    Channel *channel = [self.channels objectAtIndex:indexPath.row];
+    Channel *channel;
+    if (indexPath.section == 0) {
+        channel = [self.subbedChannels objectAtIndex:indexPath.row];
+    } else {
+        channel = [self.unsubbedChannels objectAtIndex:indexPath.row];
+    }
     cell.textLabel.text = channel.name;
     return cell;
 }
@@ -68,7 +116,11 @@
             ChannelViewController *cvc = (ChannelViewController *)segue.destinationViewController;
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.channelTable indexPathForCell:cell];
-            cvc.channel = [self.channels objectAtIndex:indexPath.row];
+            if (indexPath.section == 0) {
+                cvc.channel = [self.subbedChannels objectAtIndex:indexPath.row];
+            } else {
+                cvc.channel = [self.unsubbedChannels objectAtIndex:indexPath.row];
+            }
         }
     }
 }
