@@ -8,6 +8,7 @@
 
 #import "AddEventViewController.h"
 #import <MapKit/MapKit.h>
+#import <LocalAuthentication/LocalAuthentication.h>
 #import "DraggablePin.h"
 #import "Channel.h"
 #import "Event.h"
@@ -130,24 +131,57 @@ didChangeDragState:(MKAnnotationViewDragState)newState
 
 - (IBAction)addButtonPressed:(id)sender {
     if ([self _validateFields]) {
-        Event *newEvent = [Event new];
-        Channel *channel = [self.channelsArray objectAtIndex:[self.channelPickerView selectedRowInComponent:0]];
-        newEvent.title = self.titleTextField.text;
-        newEvent.eventDescription = self.descriptionTextField.text;
-        newEvent.coordinates = self.pin.coordinate;
-        newEvent.startTime = [NSDate date];
-        newEvent.endTime = [NSDate dateWithTimeIntervalSinceNow:(3*60*60)];
-        [APIHandler createEvent:newEvent inChannel:channel withSuccessHandler:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
-        } failureHandler:^(NSError *error) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!"
-                                                                           message:error.localizedDescription
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:@"Got it" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        LAContext *myContext = [[LAContext alloc] init];
+        NSError *authError = nil;
+        NSString *myLocalizedReasonString = @"Please verify before creating event.";
+        
+        if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
+            [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                      localizedReason:myLocalizedReasonString
+                                reply:^(BOOL success, NSError *error) {
+                                    if (success) {
+                                        Event *newEvent = [Event new];
+                                        Channel *channel = [self.channelsArray objectAtIndex:[self.channelPickerView selectedRowInComponent:0]];
+                                        newEvent.title = self.titleTextField.text;
+                                        newEvent.eventDescription = self.descriptionTextField.text;
+                                        newEvent.coordinates = self.pin.coordinate;
+                                        newEvent.startTime = [NSDate date];
+                                        newEvent.endTime = [NSDate dateWithTimeIntervalSinceNow:(3*60*60)];
+                                        [APIHandler createEvent:newEvent inChannel:channel withSuccessHandler:^{
+                                            [self dismissViewControllerAnimated:YES completion:nil];
+                                        } failureHandler:^(NSError *error) {
+                                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!"
+                                                                                                           message:error.localizedDescription
+                                                                                                    preferredStyle:UIAlertControllerStyleAlert];
+                                            [alert addAction:[UIAlertAction actionWithTitle:@"Got it" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                                                [self dismissViewControllerAnimated:YES completion:nil];
+                                            }]];
+                                            [self presentViewController:alert animated:YES completion:nil];
+                                        }];
+                                    } else {
+                                        // User did not authenticate successfully, look at error and take appropriate action
+                                    }
+                                }];
+        } else {
+            Event *newEvent = [Event new];
+            Channel *channel = [self.channelsArray objectAtIndex:[self.channelPickerView selectedRowInComponent:0]];
+            newEvent.title = self.titleTextField.text;
+            newEvent.eventDescription = self.descriptionTextField.text;
+            newEvent.coordinates = self.pin.coordinate;
+            newEvent.startTime = [NSDate date];
+            newEvent.endTime = [NSDate dateWithTimeIntervalSinceNow:(3*60*60)];
+            [APIHandler createEvent:newEvent inChannel:channel withSuccessHandler:^{
                 [self dismissViewControllerAnimated:YES completion:nil];
-            }]];
-            [self presentViewController:alert animated:YES completion:nil];
-        }];
+            } failureHandler:^(NSError *error) {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!"
+                                                                               message:error.localizedDescription
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:@"Got it" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }]];
+                [self presentViewController:alert animated:YES completion:nil];
+            }];
+        }
         
     }
 }
