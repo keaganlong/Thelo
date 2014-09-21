@@ -15,6 +15,8 @@
 		3DFD0B1D19CE17E2005CB071 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD0B1C19CE17E2005CB071 /* Channel.m */; };
 		3DFD0B2119CE1808005CB071 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD0B2019CE1808005CB071 /* Event.m */; };
 		3DFD0B2319CE20CC005CB071 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DFD0B2219CE20CC005CB071 /* CoreLocation.framework */; };
+		A01AD69A19CE2CC500847483 /* AddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A01AD69919CE2CC500847483 /* AddEventViewController.m */; };
+		A01AD69D19CE356000847483 /* DraggablePin.m in Sources */ = {isa = PBXBuildFile; fileRef = A01AD69C19CE356000847483 /* DraggablePin.m */; };
 		A0B1EC3819CDEAD200665E53 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B1EC3719CDEAD200665E53 /* MapKit.framework */; };
 		A0C6029319CD222900387D3E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029219CD222900387D3E /* Foundation.framework */; };
 		A0C6029519CD222900387D3E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C6029419CD222900387D3E /* CoreGraphics.framework */; };
@@ -65,6 +67,10 @@
 		3DFD0B2219CE20CC005CB071 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		7054201540644A8998D8A85A /* Pods-Thelo.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thelo.xcconfig"; path = "Pods/Pods-Thelo.xcconfig"; sourceTree = "<group>"; };
 		856CEF5C5BFE4F1D936BDB1A /* libPods-Thelo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Thelo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A01AD69819CE2CC500847483 /* AddEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventViewController.h; sourceTree = "<group>"; };
+		A01AD69919CE2CC500847483 /* AddEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventViewController.m; sourceTree = "<group>"; };
+		A01AD69B19CE356000847483 /* DraggablePin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggablePin.h; sourceTree = "<group>"; };
+		A01AD69C19CE356000847483 /* DraggablePin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggablePin.m; sourceTree = "<group>"; };
 		A0B1EC3719CDEAD200665E53 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A0C6028F19CD222900387D3E /* Thelo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thelo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C6029219CD222900387D3E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -132,6 +138,8 @@
 				A0C602D119CD33F600387D3E /* ChannelViewController.m */,
 				A0C602D319CD340C00387D3E /* EventViewController.h */,
 				A0C602D419CD340C00387D3E /* EventViewController.m */,
+				A01AD69819CE2CC500847483 /* AddEventViewController.h */,
+				A01AD69919CE2CC500847483 /* AddEventViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -158,6 +166,8 @@
 				3DFD0B1C19CE17E2005CB071 /* Channel.m */,
 				3DFD0B1F19CE1808005CB071 /* Event.h */,
 				3DFD0B2019CE1808005CB071 /* Event.m */,
+				A01AD69B19CE356000847483 /* DraggablePin.h */,
+				A01AD69C19CE356000847483 /* DraggablePin.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -380,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0C602D519CD340C00387D3E /* EventViewController.m in Sources */,
+				A01AD69A19CE2CC500847483 /* AddEventViewController.m in Sources */,
 				3DFD0B1D19CE17E2005CB071 /* Channel.m in Sources */,
 				3DFD0B0C19CD2CB4005CB071 /* LoginViewController.m in Sources */,
 				3DFD0B2119CE1808005CB071 /* Event.m in Sources */,
@@ -387,6 +398,7 @@
 				3DFD0B1819CDDA81005CB071 /* LocationManager.m in Sources */,
 				A0C602D219CD33F600387D3E /* ChannelViewController.m in Sources */,
 				3DFD0B1519CDD546005CB071 /* NotificationManager.m in Sources */,
+				A01AD69D19CE356000847483 /* DraggablePin.m in Sources */,
 				A0C602A319CD222900387D3E /* AppDelegate.m in Sources */,
 				3DFD0B1219CD2D4A005CB071 /* DefaultsManager.m in Sources */,
 				A0C6029F19CD222900387D3E /* main.m in Sources */,
