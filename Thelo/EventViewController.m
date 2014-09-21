@@ -51,7 +51,7 @@
 
     self.mapView.delegate = self;
     [self getWalkingDirections];
-
+    
     
 }
 

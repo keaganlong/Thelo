@@ -24,7 +24,7 @@
     CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:coordinate radius:radius identifier:identifier];
     region.notifyOnExit = NO;
     [[LocationManager manager] startMonitoringForRegion:region];
-    //[[LocationManager manager] requestStateForRegion:region];
+    [[LocationManager manager] requestStateForRegion:region];
     for (CLCircularRegion *monReg in [[LocationManager manager] monitoredRegions]) {
         //NSLog(@"Monitoring id:%@ at:(%f, %f) radius:%f", monReg.identifier, monReg.center.latitude, monReg.center.longitude, monReg.radius);
     }
@@ -75,7 +75,7 @@
             break;
         }
     }
-    if (firingEvent && !firingEvent.firedNotification) {
+    if (firingEvent && ![DefaultsManager hasNotifiedOfEvent:firingEvent]) {
         if ([DefaultsManager intentToAttendEvent:firingEvent]) {
             if (![DefaultsManager attendanceOfEvent:firingEvent]) {
                 [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"Arrived at %@", eventName] forEvent:firingEvent];
@@ -83,7 +83,7 @@
             }
         } else {
             [NotificationManager fireActionableLocalNotificationWithMessage:[NSString stringWithFormat:@"%@ within %1.0fm", eventName, circRegion.radius] forEvent:firingEvent];
-            firingEvent.firedNotification = YES;
+            [DefaultsManager notifiedOfEvent:firingEvent];
         }
     }
 }
@@ -101,7 +101,7 @@
                 break;
             }
         }
-        if (firingEvent) {
+        if (firingEvent && ![DefaultsManager hasNotifiedOfEvent:firingEvent]) {
             if ([DefaultsManager intentToAttendEvent:firingEvent]) {
                 if (![DefaultsManager attendanceOfEvent:firingEvent]) {
                     [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"Arrived at %@", eventName] forEvent:firingEvent];
@@ -109,6 +109,7 @@
                 }
             } else {
                 [NotificationManager fireActionableLocalNotificationWithMessage:[NSString stringWithFormat:@"%@ within %1.0fm", eventName, circRegion.radius] forEvent:firingEvent];
+                [DefaultsManager notifiedOfEvent:firingEvent];
             }
         }
     }

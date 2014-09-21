@@ -50,4 +50,17 @@
     return ([dict objectForKey:event.eventID] != nil);
 }
 
++ (void)notifiedOfEvent:(Event *)event {
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"event_notified"];
+    NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
+    newDict[event.eventID] = [NSNumber numberWithBool:YES];
+    [[NSUserDefaults standardUserDefaults] setObject:newDict forKey:@"event_notified"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (BOOL)hasNotifiedOfEvent:(Event *)event {
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"event_notified"];
+    return ([dict objectForKey:event.eventID] != nil);
+}
+
 @end

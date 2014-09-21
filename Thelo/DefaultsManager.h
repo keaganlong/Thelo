@@ -20,5 +20,7 @@
 + (BOOL)intentToAttendEvent:(Event *)event;
 + (void)setAttendanceOfEvent:(Event *)event;
 + (BOOL)attendanceOfEvent:(Event *)event;
++ (void)notifiedOfEvent:(Event *)event;
++ (BOOL)hasNotifiedOfEvent:(Event *)event;
 
 @end
