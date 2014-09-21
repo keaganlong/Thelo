@@ -35,6 +35,9 @@
     self.channelPickerView.delegate = self;
     self.mapView.delegate = self;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
+    
 //    [self.mapView setCenterCoordinate:[[LocationManager currentLocation] coordinate] animated:YES];
     MKCoordinateRegion region;
     MKCoordinateSpan span;
@@ -53,6 +56,30 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.titleTextField) {
+        [textField resignFirstResponder];
+        [self.descriptionTextField becomeFirstResponder];
+    } else if (textField == self.descriptionTextField) {
+        [self addButtonPressed:nil];
+    }
+    return YES;
+}
+
+- (void)keyboardDidShow {
+    CGPoint center = CGPointApplyAffineTransform(self.view.center, CGAffineTransformMakeTranslation(0, -60.0));
+    self.view.center = center;
+}
+
+- (void)keyboardWillHide {
+    CGPoint center = CGPointApplyAffineTransform(self.view.center, CGAffineTransformMakeTranslation(0, 60.0));
+    self.view.center = center;
 }
 
 - (MKAnnotationView *) mapView: (MKMapView *) mapView viewForAnnotation: (id<MKAnnotation>) annotation {
