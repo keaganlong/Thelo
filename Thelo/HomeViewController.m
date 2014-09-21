@@ -73,7 +73,7 @@ setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}]
             [self.channelTable reloadData];
         } failureHandler:nil];
     } failureHandler:nil];
-
+    [LocationManager forceMonitoredRegionsUpdate];
 }
 
 #pragma mark - UITableViewDelegate

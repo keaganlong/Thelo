@@ -16,6 +16,7 @@
     notification.alertBody = message;
     notification.category = @"intentCategory";
     notification.userInfo = @{@"event":event.eventID};
+    NSLog(@"within message: %@", message);
     [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
@@ -23,6 +24,7 @@
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.fireDate = [[NSDate alloc] init];
     notification.alertBody = message;
+    NSLog(@"arrive message: %@", message);
     [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 

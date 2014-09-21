@@ -26,7 +26,7 @@
     [[LocationManager manager] startMonitoringForRegion:region];
     [[LocationManager manager] requestStateForRegion:region];
     for (CLCircularRegion *monReg in [[LocationManager manager] monitoredRegions]) {
-        NSLog(@"Monitoring id:%@ at:(%f, %f) radius:%f", monReg.identifier, monReg.center.latitude, monReg.center.longitude, monReg.radius);
+        //NSLog(@"Monitoring id:%@ at:(%f, %f) radius:%f", monReg.identifier, monReg.center.latitude, monReg.center.longitude, monReg.radius);
     }
 }
 
@@ -75,7 +75,7 @@
             break;
         }
     }
-    if (firingEvent) {
+    if (firingEvent && !firingEvent.firedNotification) {
         if ([DefaultsManager intentToAttendEvent:firingEvent]) {
             if (![DefaultsManager attendanceOfEvent:firingEvent]) {
                 [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"Arrived at %@", eventName] forEvent:firingEvent];
@@ -83,6 +83,7 @@
             }
         } else {
             [NotificationManager fireActionableLocalNotificationWithMessage:[NSString stringWithFormat:@"%@ within %1.0fm", eventName, circRegion.radius] forEvent:firingEvent];
+            firingEvent.firedNotification = YES;
         }
     }
 }
@@ -115,11 +116,11 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation *newLocation = [locations lastObject];
-    NSLog(@"currently at (%f, %f)", newLocation.coordinate.latitude, newLocation.coordinate.latitude);
+    //NSLog(@"currently at (%f, %f)", newLocation.coordinate.latitude, newLocation.coordinate.latitude);
     for (CLCircularRegion *region in [[LocationManager manager] monitoredRegions]) {
         CLLocation *regionLoc = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
-        NSLog(@"monitoring (%f, %f), %f away", region.center.latitude, region.center.longitude, [newLocation distanceFromLocation:regionLoc]);
-        [[LocationManager manager] requestStateForRegion:region];
+        //NSLog(@"monitoring (%f, %f), %f away", region.center.latitude, region.center.longitude, [newLocation distanceFromLocation:regionLoc]);
+        //[[LocationManager manager] requestStateForRegion:region];
     }
     if (self.lastLocation) {
         if ([self.lastLocation distanceFromLocation:newLocation] > 1000) {
