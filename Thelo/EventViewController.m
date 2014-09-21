@@ -95,7 +95,7 @@
     MKDirections *walkingRouteDirections = [[MKDirections alloc] initWithRequest:walkingRouteRequest];
     [walkingRouteDirections calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse * walkingRouteResponse, NSError *walkingRouteError) {
         if (walkingRouteError) {
-            NSLog(@"alex");
+            NSLog(@"There was a error returning the walking data");
         } else {
             // The code doesn't request alternate routes, so add the single calculated route to
             // a previously declared MKRoute property called walkingRoute.
@@ -121,8 +121,8 @@
             float minLat = MIN(self.event.coordinates.latitude, [[LocationManager currentLocation] coordinate].latitude);
             float minLong = MIN(self.event.coordinates.longitude, [[LocationManager currentLocation] coordinate].longitude);
             
-            locationSpan.latitudeDelta = (maxLat - minLat) * 1.5;
-            locationSpan.longitudeDelta = (maxLong - minLong) * 1.5;
+            locationSpan.latitudeDelta = (maxLat - minLat) * 2.0;
+            locationSpan.longitudeDelta = (maxLong - minLong) * 2.0;
             CLLocationCoordinate2D center = CLLocationCoordinate2DMake((maxLat + minLat) * 0.5, (maxLong + minLong) * 0.5);
 
             [self.mapView setRegion:MKCoordinateRegionMake(center, locationSpan)];

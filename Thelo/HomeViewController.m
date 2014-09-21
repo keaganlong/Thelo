@@ -9,7 +9,9 @@
 #import "HomeViewController.h"
 #import "ChannelViewController.h"
 #import "Channel.h"
-
+#import "UINavigationBar+FlatUI.h"
+#import "UIColor+FlatUI.h"
+#import "UITableViewCell+FlatUI.h"
 @interface HomeViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *channelTable;
 @property (strong, nonatomic) NSArray *unsubbedChannels;
@@ -24,6 +26,11 @@
     self.channelTable.delegate = self;
     self.channelTable.dataSource = self;
     self.channelTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.navigationController.navigationBar configureFlatNavigationBarWithColor:[UIColor wetAsphaltColor]];
+    [self.navigationController.navigationBar
+setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+
     NSLog(@"Currently at: %@", [LocationManager currentLocation]);
     [APIHandler getChannelsWithSuccessHandler:^(NSArray *newChannels) {
         [APIHandler getSubscribedChannelsWithSuccessHandler:^(NSArray *subbedChannels) {
@@ -97,6 +104,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"general"];
+
     Channel *channel;
     if (indexPath.section == 0) {
         channel = [self.subbedChannels objectAtIndex:indexPath.row];

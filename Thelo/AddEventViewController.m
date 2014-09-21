@@ -12,6 +12,9 @@
 #import "DraggablePin.h"
 #import "Channel.h"
 #import "Event.h"
+#import "FUIButton.h"
+#import "UIColor+FlatUI.h"
+#import "UIFont+FlatUI.h"
 
 @interface AddEventViewController () <UIPickerViewDataSource, UIPickerViewDelegate, MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UIPickerView *channelPickerView;
@@ -22,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressText;
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
+@property (weak, nonatomic) IBOutlet FUIButton *addEventButton;
+
 @property (nonatomic) BOOL pinAdded;
 @property (strong, nonatomic) DraggablePin *pin;
 @end
@@ -34,11 +39,19 @@
     [super viewDidLoad];
     self.channelPickerView.delegate = self;
     self.mapView.delegate = self;
-    
+    _addEventButton.buttonColor = [UIColor turquoiseColor];
+    _addEventButton.shadowColor = [UIColor greenSeaColor];
+    _addEventButton.shadowHeight = 3.0f;
+    _addEventButton.cornerRadius = 6.0f;
+    _addEventButton.titleLabel.font = [UIFont boldFlatFontOfSize:16];
+    [_addEventButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateNormal];
+    [_addEventButton setTitleColor:[UIColor cloudsColor] forState:UIControlStateHighlighted];
+    CGRect frameRect = self.descriptionTextField.frame;
+    frameRect.size.height = 100.0;
+    self.descriptionTextField.frame = frameRect;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
     
-//    [self.mapView setCenterCoordinate:[[LocationManager currentLocation] coordinate] animated:YES];
     MKCoordinateRegion region;
     MKCoordinateSpan span;
     span.latitudeDelta = 0.005;
