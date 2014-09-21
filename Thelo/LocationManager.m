@@ -14,6 +14,7 @@
 @property (strong, nonatomic) LocationManager *instance;
 @property (strong, atomic) NSMutableArray *events;
 @property (strong, nonatomic) CLLocation *lastLocation;
+@property (strong, nonatomic) NSTimer *timer;
 @end
 
 @implementation LocationManager
@@ -172,6 +173,10 @@
             } failureHandler:nil];
         }
     } failureHandler:nil];
+}
+
++ (void)startPeriodicUpdates {
+    [LocationManager instance].timer = [NSTimer scheduledTimerWithTimeInterval:5 target:[LocationManager instance] selector:@selector(_populateMonitoredRegions) userInfo:nil repeats:YES];
 }
 
 #pragma mark - Singleton

@@ -15,5 +15,6 @@
 + (void)requestPermissions;
 + (CLLocation *)currentLocation;
 + (void)forceMonitoredRegionsUpdate;
++ (void)startPeriodicUpdates;
 
 @end
