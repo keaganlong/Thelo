@@ -119,9 +119,9 @@
     CLLocation *newLocation = [locations lastObject];
     //NSLog(@"currently at (%f, %f)", newLocation.coordinate.latitude, newLocation.coordinate.latitude);
     for (CLCircularRegion *region in [[LocationManager manager] monitoredRegions]) {
-        CLLocation *regionLoc = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
+        //CLLocation *regionLoc = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
         //NSLog(@"monitoring (%f, %f), %f away", region.center.latitude, region.center.longitude, [newLocation distanceFromLocation:regionLoc]);
-        //[[LocationManager manager] requestStateForRegion:region];
+        [[LocationManager manager] requestStateForRegion:region];
     }
     if (self.lastLocation) {
         if ([self.lastLocation distanceFromLocation:newLocation] > 1000) {
@@ -137,6 +137,7 @@
 #pragma mark - Private methods
 - (void)_populateMonitoredRegions {
     [APIHandler getSubscribedChannelsWithSuccessHandler:^(NSArray *channels) {
+        self.events = [NSMutableArray new];
         for (Channel *channel in channels) {
             [APIHandler getEventsForChannel:channel withSuccessHandler:^(NSArray *events) {
                 for (Event *event in events) {
