@@ -10,4 +10,13 @@
 
 @implementation Channel
 
+@synthesize notificationRadius = _notificationRadius;
+- (void)setNotificationRadius:(NSInteger)notificationRadius {
+    [DefaultsManager setNotificationRadius:notificationRadius forChannel:self];
+}
+
+- (NSInteger)notificationRadius {
+    return [DefaultsManager notificationRadiusForChannel:self];
+}
+
 @end

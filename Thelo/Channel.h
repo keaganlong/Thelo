@@ -12,7 +12,8 @@
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSArray *events;
+@property (strong, nonatomic) NSString *channelID;
 @property (nonatomic) BOOL subscribed;
-@property (nonatomic) NSInteger *notificationRadius;
+@property (nonatomic) NSInteger notificationRadius;
 
 @end

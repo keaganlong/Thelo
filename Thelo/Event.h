@@ -16,5 +16,6 @@
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) NSDate *endTime;
 @property (strong, nonatomic) NSArray *comments;
+@property (strong, nonatomic) NSString *eventID;
 
 @end

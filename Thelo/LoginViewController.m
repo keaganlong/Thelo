@@ -49,6 +49,11 @@
 
 - (void)_alertWithError:(NSError *)error {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Try Again"
+                                             style:UIAlertActionStyleDefault
+                                           handler:^(UIAlertAction *action) {
+                                               [self _login];
+                                           }]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

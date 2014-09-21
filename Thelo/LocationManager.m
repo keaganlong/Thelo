@@ -12,7 +12,8 @@
 @interface LocationManager () <CLLocationManagerDelegate>
 @property (strong, nonatomic) CLLocationManager *manager;
 @property (strong, nonatomic) LocationManager *instance;
-@property (strong, nonatomic) NSArray *channels;
+@property (strong, atomic) NSMutableArray *events;
+@property (strong, nonatomic) CLLocation *lastLocation;
 @end
 
 @implementation LocationManager
@@ -24,7 +25,7 @@
     region.notifyOnExit = NO;
     [[LocationManager manager] startMonitoringForRegion:region];
     for (CLCircularRegion *monReg in [[LocationManager manager] monitoredRegions]) {
-        NSLog(@"Monitoring: (%f, %f) id: %@", monReg.center.latitude, monReg.center.longitude, monReg.identifier);
+        NSLog(@"Monitoring id:%@ at:(%f, %f) radius:%f", monReg.identifier, monReg.center.latitude, monReg.center.longitude, monReg.radius);
     }
 }
 
@@ -52,6 +53,10 @@
     }
 }
 
++ (void)forceMonitoredRegionsUpdate {
+    [[LocationManager instance] _populateMonitoredRegions];
+}
+
 + (CLLocationManager *)manager {
     return [[LocationManager instance] manager];
 }
@@ -59,7 +64,59 @@
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
     CLCircularRegion *circRegion = (CLCircularRegion *)region;
-    [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"You're within %1.0fm of %@!", circRegion.radius, circRegion.identifier]];
+    NSString *eventName = [circRegion.identifier componentsSeparatedByString:@"#0#"][0];
+    [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"You're within %1.0fm of %@!", circRegion.radius, eventName]];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    CLLocation *newLocation = [locations lastObject];
+    if (self.lastLocation) {
+        if ([self.lastLocation distanceFromLocation:newLocation] > 1000) {
+            [self _populateMonitoredRegions];
+            self.lastLocation = newLocation;
+        }
+    } else {
+        [self _populateMonitoredRegions];
+        self.lastLocation = newLocation;
+    }
+}
+
+#pragma mark - Private methods
+- (void)_populateMonitoredRegions {
+    [APIHandler getSubscribedChannelsWithSuccessHandler:^(NSArray *channels) {
+        for (Channel *channel in channels) {
+            [APIHandler getEventsForChannel:channel withSuccessHandler:^(NSArray *events) {
+                for (Event *event in events) {
+                    if ([self.events count] < 15) {
+                        [self.events addObject:event];
+                    }
+                    else {
+                        Event *removalTarget;
+                        for (Event *oldEvent in self.events) {
+                            CLLocation *newLocation = [[CLLocation alloc] initWithCoordinate:event.coordinates altitude:1 horizontalAccuracy:1 verticalAccuracy:-1 timestamp:nil];
+                            CLLocation *oldLocation = [[CLLocation alloc] initWithCoordinate:oldEvent.coordinates altitude:1 horizontalAccuracy:1 verticalAccuracy:-1 timestamp:nil];
+                            CLLocation *currentLocation = [LocationManager currentLocation];
+                            if ([currentLocation distanceFromLocation:newLocation] < [currentLocation distanceFromLocation:oldLocation]) {
+                                removalTarget = oldEvent;
+                                break;
+                            }
+                        }
+                        if (removalTarget) {
+                            [self.events removeObject:removalTarget];
+                            [self.events addObject:event];
+                        }
+                    }
+                }
+                [LocationManager clearRegisterRegions];
+                for (Event *event in self.events) {
+                    [LocationManager registerRegionAtLatitude:event.coordinates.latitude
+                                                    longitude:event.coordinates.longitude
+                                                   withRadius:channel.notificationRadius
+                                                andIdentifier:[NSString stringWithFormat:@"%@#0#%@", event.title, event.eventID]];
+                }
+            } failureHandler:nil];
+        }
+    } failureHandler:nil];
 }
 
 #pragma mark - Singleton
@@ -73,6 +130,7 @@
             [instance.manager startUpdatingLocation];
             [instance.manager startMonitoringSignificantLocationChanges];
             instance.manager.pausesLocationUpdatesAutomatically = NO;
+            instance.events = [NSMutableArray new];
         }
     }
     return instance;

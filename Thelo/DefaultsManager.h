@@ -7,9 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Channel.h"
 
 #define DEVICE_ID [[[UIDevice currentDevice] identifierForVendor] UUIDString]
 
 @interface DefaultsManager : NSObject
+
++ (NSInteger)notificationRadiusForChannel:(Channel *)channel;
++ (void)setNotificationRadius:(NSInteger)radius forChannel:(Channel *)channel;
 
 @end

@@ -11,7 +11,7 @@
 #import "Channel.h"
 #import "Event.h"
 
-#define BASE_API_URL @"http://vast-badlands-7635.herokuapp.com"
+#define BASE_API_URL @"http://www.thello.me"
 #define LOGIN_USER_URL @"/user/addOne"
 #define SUB_UNSUB_CHANNEL_URL @"/user/updateUserChannels"
 #define GET_SUBBED_CHANNELS_URL @"/user/getSubscribedChannels"
@@ -67,6 +67,7 @@
                         if (channel[@"name"]) {
                             Channel *newChannel = [Channel new];
                             newChannel.name = channel[@"name"];
+                            newChannel.channelID = channel[@"_id"];
                             newChannel.subscribed = YES;
                             [channels addObject:newChannel];
                         }
@@ -154,6 +155,7 @@
                     if (channel[@"name"]) {
                         Channel *newChannel = [Channel new];
                         newChannel.name = channel[@"name"];
+                        newChannel.channelID = channel[@"_id"];
                         newChannel.subscribed = NO;
                         [channels addObject:newChannel];
                     }
@@ -198,6 +200,7 @@
                     event.startTime = [NSDate dateWithTimeIntervalSince1970:[eventData[@"startDate"] doubleValue]];
                     event.endTime = [NSDate dateWithTimeIntervalSince1970:[eventData[@"endDate"] doubleValue]];
                     event.comments = eventData[@"comments"];
+                    event.eventID = eventData[@"_id"];
                     [events addObject:event];
                 }
                 success(events);

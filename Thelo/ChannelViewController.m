@@ -34,6 +34,7 @@
         [self.channelTable reloadData];
     } failureHandler:nil];
     [self.subscribedButton setTitle:(self.channel.subscribed ? @"Subscribed √" : @"Not Subscribed") forState: UIControlStateNormal];
+    [self _selectSegmentedControlSegment];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -41,7 +42,6 @@
         self.events = events;
         [self.channelTable reloadData];
     } failureHandler:nil];
-
 }
 
 - (IBAction)subscribeChange:(id)sender {
@@ -65,6 +65,50 @@
 
 -(IBAction)sliderChanged:(id)sender{
    _radius.text = [_notificationRadiusControl titleForSegmentAtIndex:_notificationRadiusControl.selectedSegmentIndex];
+    switch (self.notificationRadiusControl.selectedSegmentIndex) {
+        case 0:
+            self.channel.notificationRadius = 50;
+            break;
+        case 1:
+            self.channel.notificationRadius = 100;
+            break;
+        case 2:
+            self.channel.notificationRadius = 250;
+            break;
+        case 3:
+            self.channel.notificationRadius = 500;
+            break;
+        case 4:
+            self.channel.notificationRadius = 1000;
+            break;
+        default:
+            self.channel.notificationRadius = 50;
+            break;
+    }
+    [LocationManager forceMonitoredRegionsUpdate];
+}
+
+- (void)_selectSegmentedControlSegment {
+    switch (self.channel.notificationRadius) {
+        case 50:
+            self.notificationRadiusControl.selectedSegmentIndex = 0;
+            break;
+        case 100:
+            self.notificationRadiusControl.selectedSegmentIndex = 1;
+            break;
+        case 250:
+            self.notificationRadiusControl.selectedSegmentIndex = 2;
+            break;
+        case 500:
+            self.notificationRadiusControl.selectedSegmentIndex = 3;
+            break;
+        case 1000:
+            self.notificationRadiusControl.selectedSegmentIndex = 4;
+            break;
+        default:
+            self.notificationRadiusControl.selectedSegmentIndex = 0;
+            break;
+    }
 }
 
 #pragma mark - UITableViewDelegate

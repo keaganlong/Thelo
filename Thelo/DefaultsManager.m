@@ -10,4 +10,18 @@
 
 @implementation DefaultsManager
 
++ (NSInteger)notificationRadiusForChannel:(Channel *)channel {
+    double radius = [[NSUserDefaults standardUserDefaults] integerForKey:[NSString stringWithFormat:@"channel_%@", channel.channelID]];
+    if (radius == 0) {
+        radius = 100;
+        [DefaultsManager setNotificationRadius:100.0 forChannel:channel];
+    }
+    return radius;
+}
+
++ (void)setNotificationRadius:(NSInteger)radius forChannel:(Channel *)channel {
+    [[NSUserDefaults standardUserDefaults] setInteger:radius forKey:[NSString stringWithFormat:@"channel_%@", channel.channelID]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end

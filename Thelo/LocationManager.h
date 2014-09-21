@@ -14,5 +14,6 @@
 + (void)registerRegionAtLatitude:(double)latitude longitude:(double)longitude withRadius:(double)rad andIdentifier:(NSString *)identifier;
 + (void)requestPermissions;
 + (CLLocation *)currentLocation;
++ (void)forceMonitoredRegionsUpdate;
 
 @end
