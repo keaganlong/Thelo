@@ -39,9 +39,11 @@
                 NSDictionary *responseDict = (NSDictionary *)responseObject;
                 NSMutableArray *channels = [[NSMutableArray alloc] init];
                 for (NSDictionary *channel in responseDict[@"channels"]) {
-                    Channel *newChannel = [Channel new];
-                    newChannel.name = channel[@"name"];
-                    [channels addObject:newChannel];
+                    if (channel[@"name"]) {
+                        Channel *newChannel = [Channel new];
+                        newChannel.name = channel[@"name"];
+                        [channels addObject:newChannel];
+                    }
                 }
                 success(channels);
             }
