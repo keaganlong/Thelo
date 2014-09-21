@@ -119,6 +119,7 @@
     for (CLCircularRegion *region in [[LocationManager manager] monitoredRegions]) {
         CLLocation *regionLoc = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
         NSLog(@"monitoring (%f, %f), %f away", region.center.latitude, region.center.longitude, [newLocation distanceFromLocation:regionLoc]);
+        [[LocationManager manager] requestStateForRegion:region];
     }
     if (self.lastLocation) {
         if ([self.lastLocation distanceFromLocation:newLocation] > 1000) {
