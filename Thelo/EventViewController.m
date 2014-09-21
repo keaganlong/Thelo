@@ -23,14 +23,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.titleLabel.text = @"Free food";
-    self.timeLabel.text = @"2 hours ago";
+    self.titleLabel.text = self.event.title;
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.doesRelativeDateFormatting = YES;
+    [formatter setTimeStyle:NSDateFormatterNoStyle];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setLocale:[NSLocale currentLocale]];
+    self.timeLabel.text = [self _dateDiff:self.event.startTime];
 
-    
     self.mapView.delegate = self;
     [self getWalkingDirections];
 
     
+}
+
+- (void)setEvent:(Event *)event {
+    _event = event;
+    self.title = event.title;
+    self.titleLabel.text = event.title;
 }
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
@@ -45,7 +55,7 @@
 
 - (IBAction)openInMaps:(id)sender {
     
-    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(33.776729599999996, -84.396323) addressDictionary:nil];
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:self.event.coordinates addressDictionary:nil];
     _mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
     [_mapItem setName:@"The location name"];
     [_mapItem openInMapsWithLaunchOptions:nil];
@@ -56,9 +66,9 @@
     walkingRouteRequest.transportType = MKDirectionsTransportTypeWalking;
     MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:[[LocationManager currentLocation] coordinate] addressDictionary:nil];
     [walkingRouteRequest setSource:[[MKMapItem alloc] initWithPlacemark:placemark]];
-    placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(33.776729599999996, -84.407323) addressDictionary:nil];
+    placemark = [[MKPlacemark alloc] initWithCoordinate:self.event.coordinates addressDictionary:nil];
     MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    [annotation setCoordinate:CLLocationCoordinate2DMake(33.776729599999996, -84.407323)];
+    [annotation setCoordinate:self.event.coordinates];
     [walkingRouteRequest setDestination :[[MKMapItem alloc] initWithPlacemark:placemark]];
     
     MKDirections *walkingRouteDirections = [[MKDirections alloc] initWithRequest:walkingRouteRequest];
@@ -102,6 +112,27 @@
                                   [NSValue valueWithMKCoordinateSpan:region.span], MKLaunchOptionsMapSpanKey, nil]];
 }
 
-
+#pragma mark - Private methods
+- (NSString *)_dateDiff:(NSDate *)date {
+    NSDate *todayDate = [NSDate date];
+    double ti = [date timeIntervalSinceDate:todayDate];
+    ti = ti * -1;
+    if(ti < 1) {
+        return @"never";
+    } else 	if (ti < 60) {
+        return @"less than a minute ago";
+    } else if (ti < 3600) {
+        int diff = round(ti / 60);
+        return [NSString stringWithFormat:@"%d minutes ago", diff];
+    } else if (ti < 86400) {
+        int diff = round(ti / 60 / 60);
+        return[NSString stringWithFormat:@"%d hours ago", diff];
+    } else if (ti < 2629743) {
+        int diff = round(ti / 60 / 60 / 24);
+        return[NSString stringWithFormat:@"%d days ago", diff];
+    } else {
+        return @"never";
+    }	
+}
 
 @end

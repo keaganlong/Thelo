@@ -65,7 +65,7 @@
     NSDictionary *dictionary = @{@"channelName":channel.name,
                                  @"lat":[NSNumber numberWithDouble:lat],
                                  @"lng":[NSNumber numberWithDouble:lng],
-                                 @"range":[NSNumber numberWithInt:1000]};
+                                 @"range":[NSNumber numberWithInt:5000]};
     NSURLRequest *request = [self _createPOSTRequestWithURL:url andDictionary:dictionary];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -77,7 +77,7 @@
                 NSMutableArray *events = [NSMutableArray new];
                 for (NSDictionary *eventData in responseDict[@"events"]) {
                     Event *event = [Event new];
-                    event.title = eventData[@"data"];
+                    event.title = eventData[@"title"];
                     event.eventDescription = eventData[@"description"];
                     event.coordinates = CLLocationCoordinate2DMake([eventData[@"lat"] doubleValue], [eventData[@"lng"] doubleValue]);
                     event.startTime = [NSDate dateWithTimeIntervalSince1970:[eventData[@"startDate"] doubleValue]];
@@ -85,6 +85,14 @@
                     event.comments = eventData[@"comments"];
                     [events addObject:event];
                 }
+                Event *event = [Event new];
+                event.title = @"Test event";
+                event.eventDescription = @"Yo, we hackin n shit";
+                event.coordinates = CLLocationCoordinate2DMake(33, -84);
+                event.startTime = [NSDate dateWithTimeIntervalSinceNow:-3000];
+                event.endTime = [NSDate dateWithTimeIntervalSinceNow:5000];
+                event.comments = [NSArray new];
+                [events addObject:event];
                 success(events);
             }
         }];

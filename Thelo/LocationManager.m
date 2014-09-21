@@ -12,6 +12,7 @@
 @interface LocationManager () <CLLocationManagerDelegate>
 @property (strong, nonatomic) CLLocationManager *manager;
 @property (strong, nonatomic) LocationManager *instance;
+@property (strong, nonatomic) NSArray *channels;
 @end
 
 @implementation LocationManager
@@ -70,6 +71,7 @@
             instance.manager = [[CLLocationManager alloc] init];
             instance.manager.delegate = instance;
             [instance.manager startUpdatingLocation];
+            [instance.manager startMonitoringSignificantLocationChanges];
             instance.manager.pausesLocationUpdatesAutomatically = NO;
         }
     }
