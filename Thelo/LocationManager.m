@@ -24,6 +24,7 @@
     CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:coordinate radius:radius identifier:identifier];
     region.notifyOnExit = NO;
     [[LocationManager manager] startMonitoringForRegion:region];
+    [[LocationManager manager] requestStateForRegion:region];
     for (CLCircularRegion *monReg in [[LocationManager manager] monitoredRegions]) {
         NSLog(@"Monitoring id:%@ at:(%f, %f) radius:%f", monReg.identifier, monReg.center.latitude, monReg.center.longitude, monReg.radius);
     }
@@ -82,6 +83,32 @@
             }
         } else {
             [NotificationManager fireActionableLocalNotificationWithMessage:[NSString stringWithFormat:@"%@ within %1.0fm", eventName, circRegion.radius] forEvent:firingEvent];
+        }
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
+    if (state == CLRegionStateInside) {
+        CLCircularRegion *circRegion = (CLCircularRegion *)region;
+        NSArray *components = [circRegion.identifier componentsSeparatedByString:@"#0#"];
+        NSString *eventName = components[0];
+        NSString *eventID = components[1];
+        Event *firingEvent;
+        for (Event *event in self.events) {
+            if ([event.eventID isEqualToString:eventID]) {
+                firingEvent = event;
+                break;
+            }
+        }
+        if (firingEvent) {
+            if ([DefaultsManager intentToAttendEvent:firingEvent]) {
+                if (![DefaultsManager attendanceOfEvent:firingEvent]) {
+                    [NotificationManager fireLocalNotificationWithMessage:[NSString stringWithFormat:@"Arrived at %@", eventName] forEvent:firingEvent];
+                    [APIHandler setAttendanceOfEvent:firingEvent withSuccessHandler:nil failureHandler:nil];
+                }
+            } else {
+                [NotificationManager fireActionableLocalNotificationWithMessage:[NSString stringWithFormat:@"%@ within %1.0fm", eventName, circRegion.radius] forEvent:firingEvent];
+            }
         }
     }
 }
