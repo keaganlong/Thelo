@@ -39,6 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.channelLabel.text = self.channel.name;
+    self.notificationText.text = self.channel.subscribed ? @"Subscribed!" : @"Unsubscribed!";
     _notificationRadiusControl.selectedFont = [UIFont boldFlatFontOfSize:10];
     _notificationRadiusControl.selectedFontColor = [UIColor cloudsColor];
     _notificationRadiusControl.deselectedFont = [UIFont flatFontOfSize:10];
