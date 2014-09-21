@@ -41,7 +41,8 @@
     _attendingSwitch.offColor = [UIColor cloudsColor];
     _attendingSwitch.onLabel.text = @"Going";
     _attendingSwitch.offLabel.text = @"Not Going";
-    _attendingSwitch.on = NO;
+    _attendingSwitch.on = [DefaultsManager intentToAttendEvent:self.event];
+    _attendingSwitch.enabled = !_attendingSwitch.on;
 
     _attendingSwitch.onBackgroundColor = [UIColor midnightBlueColor];
     _attendingSwitch.offBackgroundColor = [UIColor silverColor];
@@ -76,6 +77,14 @@
     _mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
     [_mapItem setName:@"The location name"];
     [_mapItem openInMapsWithLaunchOptions:nil];
+}
+
+- (IBAction)goingStateChanged:(id)sender {
+    FUISwitch *goingSwitch = (FUISwitch *)sender;
+    if (goingSwitch.on) {
+        _attendingSwitch.enabled = NO;
+        [APIHandler setIntentToAttendEvent:self.event withSuccessHandler:nil failureHandler:nil];
+    }
 }
 
 - (IBAction)shareButtonPressed:(id)sender {
