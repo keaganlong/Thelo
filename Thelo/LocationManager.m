@@ -88,6 +88,11 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation *newLocation = [locations lastObject];
+    NSLog(@"currently at (%f, %f)", newLocation.coordinate.latitude, newLocation.coordinate.latitude);
+    for (CLCircularRegion *region in [[LocationManager manager] monitoredRegions]) {
+        CLLocation *regionLoc = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
+        NSLog(@"monitoring (%f, %f), %f away", region.center.latitude, region.center.longitude, [newLocation distanceFromLocation:regionLoc]);
+    }
     if (self.lastLocation) {
         if ([self.lastLocation distanceFromLocation:newLocation] > 1000) {
             [self _populateMonitoredRegions];
