@@ -36,6 +36,14 @@
     } failureHandler:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [APIHandler getEventsForChannel:self.channel withSuccessHandler:^(NSArray *events) {
+        self.events = events;
+        [self.channelTable reloadData];
+    } failureHandler:nil];
+
+}
+
 - (IBAction)subscribeChange:(id)sender {
     if (!self.subscribed) {
         [self.subscribedButton setTitle: @"Not Subscribed" forState: UIControlStateNormal];

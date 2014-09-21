@@ -32,6 +32,14 @@
     } failureHandler:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [APIHandler getChannelsWithSuccessHandler:^(NSArray *newChannels) {
+        self.channels = newChannels;
+        [self.channelTable reloadData];
+    } failureHandler:nil];
+
+}
+
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

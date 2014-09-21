@@ -231,7 +231,7 @@ didChangeDragState:(MKAnnotationViewDragState)newState
 }
 
 - (BOOL)_validateFields {
-    return ([self.titleTextField.text length] && [self.descriptionTextField.text length] && self.pinAdded);
+    return ([self.titleTextField.text length] && self.pinAdded);
 }
 /*
 #pragma mark - Navigation
