@@ -187,8 +187,16 @@ didChangeDragState:(MKAnnotationViewDragState)newState
                                         newEvent.coordinates = self.pin.coordinate;
                                         newEvent.startTime = [NSDate date];
                                         newEvent.endTime = [NSDate dateWithTimeIntervalSinceNow:(3*60*60)];
-                                        [APIHandler createEvent:newEvent inChannel:channel withSuccessHandler:^{
-                                            [self dismissViewControllerAnimated:YES completion:nil];
+                                        [APIHandler createEvent:newEvent inChannel:channel withSuccessHandler:^(BOOL success, NSString *message) {
+                                            if (success) {
+                                                [self dismissViewControllerAnimated:YES completion:nil];
+                                            } else {
+                                                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!"
+                                                                                                               message:message
+                                                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                                                [alert addAction:[UIAlertAction actionWithTitle:@"Got it" style:UIAlertActionStyleCancel handler:nil]];
+                                                [self presentViewController:alert animated:YES completion:nil];
+                                            }
                                         } failureHandler:^(NSError *error) {
                                             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!"
                                                                                                            message:error.localizedDescription
@@ -210,8 +218,16 @@ didChangeDragState:(MKAnnotationViewDragState)newState
             newEvent.coordinates = self.pin.coordinate;
             newEvent.startTime = [NSDate date];
             newEvent.endTime = [NSDate dateWithTimeIntervalSinceNow:(3*60*60)];
-            [APIHandler createEvent:newEvent inChannel:channel withSuccessHandler:^{
-                [self dismissViewControllerAnimated:YES completion:nil];
+            [APIHandler createEvent:newEvent inChannel:channel withSuccessHandler:^(BOOL success, NSString *message) {
+                if (success) {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                } else {
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!"
+                                                                                   message:message
+                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                    [alert addAction:[UIAlertAction actionWithTitle:@"Got it" style:UIAlertActionStyleCancel handler:nil]];
+                    [self presentViewController:alert animated:YES completion:nil];
+                }
             } failureHandler:^(NSError *error) {
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!"
                                                                                message:error.localizedDescription

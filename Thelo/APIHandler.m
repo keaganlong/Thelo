@@ -221,7 +221,7 @@
     [operation start];
 }
 
-- (void)createEvent:(Event *)event inChannel:(Channel *)channel withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure {
+- (void)createEvent:(Event *)event inChannel:(Channel *)channel withSuccessHandler:(void (^)(BOOL, NSString *))success failureHandler:(void (^)(NSError *))failure {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_API_URL, CREATE_EVENT_URL]];
     CLLocationCoordinate2D coordinates = event.coordinates;
     CLLocationDegrees lat = coordinates.latitude;
@@ -240,7 +240,13 @@
         NSLog(@"POST response %@ %@", responseObject, [url absoluteString]);
         [self _onMainQueue:^{
             if (success) {
-                success();
+                NSDictionary *responseDict = (NSDictionary *)responseObject;
+                BOOL creationSuccess = [[responseDict objectForKey:@"success"] boolValue];
+                if (creationSuccess) {
+                    success(YES, nil);
+                } else {
+                    success(NO, [responseDict objectForKey:@"message"]);
+                }
             }
         }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -367,7 +373,7 @@
     [[self instance] getEventsForChannel:channel withSuccessHandler:success failureHandler:failure];
 }
 
-+ (void)createEvent:(Event *)event inChannel:(Channel *)channel withSuccessHandler:(void (^)())success failureHandler:(void (^)(NSError *))failure {
++ (void)createEvent:(Event *)event inChannel:(Channel *)channel withSuccessHandler:(void (^)(BOOL, NSString *))success failureHandler:(void (^)(NSError *))failure {
     [[self instance] createEvent:event inChannel:channel withSuccessHandler:success failureHandler:failure];
 }
 
