@@ -24,7 +24,7 @@
     CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:coordinate radius:radius identifier:identifier];
     region.notifyOnExit = NO;
     [[LocationManager manager] startMonitoringForRegion:region];
-    [[LocationManager manager] requestStateForRegion:region];
+    //[[LocationManager manager] requestStateForRegion:region];
     for (CLCircularRegion *monReg in [[LocationManager manager] monitoredRegions]) {
         //NSLog(@"Monitoring id:%@ at:(%f, %f) radius:%f", monReg.identifier, monReg.center.latitude, monReg.center.longitude, monReg.radius);
     }
