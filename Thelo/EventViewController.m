@@ -51,8 +51,7 @@
 
     self.mapView.delegate = self;
     [self getWalkingDirections];
-    
-    
+    [DefaultsManager clearNotificationOfEvent:self.event];
 }
 
 - (void)setEvent:(Event *)event {

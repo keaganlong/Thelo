@@ -22,5 +22,6 @@
 + (BOOL)attendanceOfEvent:(Event *)event;
 + (void)notifiedOfEvent:(Event *)event;
 + (BOOL)hasNotifiedOfEvent:(Event *)event;
++ (void)clearNotificationOfEvent:(Event *)event;
 
 @end

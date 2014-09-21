@@ -63,4 +63,12 @@
     return ([dict objectForKey:event.eventID] != nil);
 }
 
++ (void)clearNotificationOfEvent:(Event *)event {
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"event_notified"];
+    NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
+    [newDict removeObjectForKey:event.eventID];
+    [[NSUserDefaults standardUserDefaults] setObject:newDict forKey:@"event_notified"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end
